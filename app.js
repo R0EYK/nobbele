@@ -6,11 +6,13 @@ const productRoutes = require('./routes/productRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // MongoDB Connection
 mongoose.connect('mongodb+srv://roeyk70:123ad123ad@nobbele.9nzlam0.mongodb.net/mydatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true,
@@ -25,15 +27,13 @@ mongoose.connect('mongodb+srv://roeyk70:123ad123ad@nobbele.9nzlam0.mongodb.net/m
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve home.html on root path
-const viewsPath = path.join(__dirname, 'Views', 'home.html');
 app.get('/', (req, res) => {
-    res.sendFile(viewsPath);
+    res.sendFile(path.join(__dirname, 'Views', 'home.html'));
 });
 
 // Serve addProduct.html
 app.get('/addProduct', (req, res) => {
-    const addProductPath = path.join(__dirname, 'Views', 'addProduct.html');
-    res.sendFile(addProductPath);
+    res.sendFile(path.join(__dirname, 'Views', 'addProduct.html'));
 });
 
 // Routes

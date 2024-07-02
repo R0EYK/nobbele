@@ -1,12 +1,9 @@
+// public/js/home.js
+
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Fetching products...');
     fetch('/products/list')
-    .then(response => {
-        console.log('Response status:', response.status);
-        return response.json();
-    })
+        .then(response => response.json())
         .then(products => {
-            console.log('Products fetched:', products);
             const productContainer = document.getElementById('productContainer');
             products.forEach(product => {
                 const productDiv = document.createElement('div');
@@ -26,7 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 productDiv.appendChild(productName);
                 productDiv.appendChild(productPrice);
 
-                productContainer.appendChild(productDiv);
+                // Create link to product detail page
+                const productLink = document.createElement('a');
+                productLink.href = `/products/${product._id}`; // Assuming productId is available in the product object
+                productLink.appendChild(productDiv);
+
+                productContainer.appendChild(productLink);
             });
         })
         .catch(err => console.error('Error fetching products:', err));
