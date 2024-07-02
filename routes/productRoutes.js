@@ -1,20 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/productModel');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 // Route to create a new product
 router.post('/add', async (req, res) => {
-    const { productId, name, price, description, image, brand, gender } = req.body;
-
-    // Check if productId is unique
-    const existingProduct = await Product.findOne({ productId });
-    if (existingProduct) {
-        console.error('Error: Product ID already exists.');
-        return res.status(400).send('Product ID already exists.');
-    }
+    const { name, price, description, image, brand, gender } = req.body;
 
     const newProduct = new Product({
-        productId,
         name,
         price,
         description,
@@ -33,16 +27,37 @@ router.post('/add', async (req, res) => {
     }
 });
 
-
-// Route to get products for homepage
+// Route to fetch a list of products
 router.get('/list', async (req, res) => {
     try {
-        const products = await Product.find().limit(3); // Fetching 3 products as an example
-        console.log('MongoDB Query: Fetching products');
-        console.log('Fetched Products:', products);
+        const products = await Product.find();
         res.json(products);
     } catch (err) {
         console.error('Error fetching products:', err);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
+
+// Route to fetch and render product details by productId
+router.get('/:_id', async (req, res) => {
+
+    try {
+        const productId = req.params._id;
+        console.log('Fetching product details for productId:', productId);
+
+
+        const product = await Product.findById(productId);
+
+        if (!product) {
+            console.log('Product not found for productId:', productId);
+            return res.status(404).send('Product not found');
+        }
+
+        // Render productPage.ejs with product data
+        res.render('productPage', { product: product });
+
+    } catch (err) {
+        console.error('Error fetching product details:', err);
         res.status(500).send('Server Error');
     }
 });

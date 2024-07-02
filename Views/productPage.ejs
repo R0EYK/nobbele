@@ -1,0 +1,25 @@
+<!-- views/productPage.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.name %> - Product Page</title>
+    <link rel="stylesheet" href="/css/product.css"> <!-- Ensure correct path -->
+</head>
+<body>
+    <div class="product">
+        <img src="<%= product.image[0] %>" alt="<%= product.name %>">
+        <h2><%= product.name %></h2>
+        <p>Description: <%= product.description %></p>
+        <p>Price: $<%= product.price %></p>
+        <p>Brand: <%= product.brand %></p>
+        <p>Gender: <%= product.gender %></p>
+    </div>
+
+    <a href="/">Back to Home</a>
+
+    <script src="/js/product.js"></script> <!-- Ensure correct path -->
+</body>
+</html>
