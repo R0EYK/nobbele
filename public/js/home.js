@@ -1,11 +1,14 @@
-// public/js/home.js
-
 document.addEventListener('DOMContentLoaded', () => {
     fetch('/products/list')
         .then(response => response.json())
         .then(products => {
+            // Sort products by date added (assuming there's a 'createdAt' field)
+
+            // Take the last 4 products
+            const last4Products = products.slice(-4);
+
             const productContainer = document.getElementById('productContainer');
-            products.forEach(product => {
+            last4Products.forEach(product => {
                 const productDiv = document.createElement('div');
                 productDiv.className = 'product';
 

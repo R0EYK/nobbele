@@ -40,6 +40,7 @@ app.get('/addProduct', (req, res) => {
 // Routes
 app.use('/products', productRoutes);
 app.use('/brands', brandRoutes); 
+app.use('/bags', productRoutes); 
 
 
 // Start Server
