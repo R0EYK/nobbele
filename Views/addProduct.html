@@ -9,8 +9,7 @@
 <body>
     <h1>Add New Product</h1>
     <form id="productForm">
-        <label for="productId">Product ID:</label>
-        <input type="text" id="productId" name="productId" required><br>
+        <!-- Remove productId field if ObjectId is auto-generated -->
 
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br>
@@ -25,7 +24,9 @@
         <input type="text" id="image" name="image" required><br>
 
         <label for="brand">Brand:</label>
-        <input type="text" id="brand" name="brand" required><br>
+        <select id="brand" name="brand" required>
+            <!-- Options will be dynamically populated -->
+        </select><br>
 
         <label for="gender">Gender:</label>
         <select id="gender" name="gender" required>
@@ -34,10 +35,38 @@
             <option value="Unisex">Unisex</option>
         </select><br>
 
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            <option value="Bags">Bags</option>
+            <option value="Wallets">Wallets</option>
+            <option value="Accessories">Accessories</option>
+            <option value="JEWELRY">JEWELRY</option>
+        </select><br>
+
         <button type="submit">Add Product</button>
     </form>
     <p id="message"></p>
     <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/brands/list');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch brands');
+                }
+                const brands = await response.json();
+                const brandSelect = document.getElementById('brand');
+
+                brands.forEach(brand => {
+                    const option = document.createElement('option');
+                    option.value = brand._id; // Assuming _id is ObjectId
+                    option.textContent = brand.name; // Assuming 'name' is the brand name
+                    brandSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching brands:', error);
+            }
+        });
+
         document.getElementById('productForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 

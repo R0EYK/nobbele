@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const productRoutes = require('./routes/productRoutes');
+const brandRoutes = require('./routes/brandRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,6 +39,8 @@ app.get('/addProduct', (req, res) => {
 
 // Routes
 app.use('/products', productRoutes);
+app.use('/brands', brandRoutes); 
+
 
 // Start Server
 app.listen(PORT, () => {

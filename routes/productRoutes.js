@@ -3,21 +3,25 @@ const router = express.Router();
 const Product = require('../models/productModel');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+const Brand = require('../models/brandModel');
+
 
 // Route to create a new product
 router.post('/add', async (req, res) => {
-    const { name, price, description, image, brand, gender } = req.body;
-
+    const { name, price, description, image, brand, gender  , category} = req.body;
+        
     const newProduct = new Product({
         name,
         price,
         description,
         image: image.split(','), // Assuming image URLs are comma separated
         brand,
-        gender
+        gender,
+        category
     });
 
     try {
+        
         await newProduct.save();
         console.log('Product added:', newProduct);
         res.status(201).send('Product added successfully');
@@ -30,7 +34,7 @@ router.post('/add', async (req, res) => {
 // Route to fetch a list of products
 router.get('/list', async (req, res) => {
     try {
-        const products = await Product.find();
+        const products = await Product.find().populate('brand' , 'name');
         res.json(products);
     } catch (err) {
         console.error('Error fetching products:', err);
@@ -40,18 +44,25 @@ router.get('/list', async (req, res) => {
 
 // Route to fetch and render product details by productId
 router.get('/:_id', async (req, res) => {
-
     try {
         const productId = req.params._id;
+
+        // Validate if productId is a valid ObjectId
+        if (!ObjectId.isValid(productId)) {
+            console.log('Invalid ObjectId format:', productId);
+            return res.status(404).send('Product not found');
+        }
+
         console.log('Fetching product details for productId:', productId);
 
-
-        const product = await Product.findById(productId);
+        const product = await Product.findById(productId).populate('brand' , 'name');
+        console.log(product);///
 
         if (!product) {
             console.log('Product not found for productId:', productId);
             return res.status(404).send('Product not found');
         }
+        console.log('Product brand:', product.brand.name);
 
         // Render productPage.ejs with product data
         res.render('productPage', { product: product });
