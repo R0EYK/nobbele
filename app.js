@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const productRoutes = require('./routes/productRoutes');
 const brandRoutes = require('./routes/brandRoutes');
+const userRoutes = require('./routes/userRoutes');
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +43,7 @@ app.get('/addProduct', (req, res) => {
 // Routes
 app.use('/products', productRoutes);
 app.use('/brands', brandRoutes); 
+app.use('/', userRoutes);
 
 
 // Start Server
