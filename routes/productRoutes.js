@@ -34,7 +34,7 @@ router.post('/add', async (req, res) => {
 // Route to fetch a list of products
 router.get('/list', async (req, res) => {
     try {
-        const products = await Product.find().populate('brand' , 'name');
+        const products = await Product.find().populate("brand").exec();
         res.json(products);
     } catch (err) {
         console.error('Error fetching products:', err);
@@ -55,7 +55,7 @@ router.get('/:_id', async (req, res) => {
 
         console.log('Fetching product details for productId:', productId);
 
-        const product = await Product.findById(productId).populate('brand' , 'name');
+        const product = await Product.findById(productId).populate("brand").exec();
         console.log(product);///
 
         if (!product) {

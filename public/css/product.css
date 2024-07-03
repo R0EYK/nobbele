@@ -1,0 +1,83 @@
+.html {
+    font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-color: white;
+}
+
+.topMenu {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically in the center */
+    justify-content: space-between; /* Distribute items evenly along the main axis */
+    padding: 10px;
+    position: fixed; /* Fix the menu to the top */
+    width: 98%; /* Full width */
+    background-color: white; /* Add background color */
+    border-bottom: 1px solid black; /* Add a bottom border */
+    z-index: 1000; /* Ensure it stays above other elements */
+    top:0;
+}
+
+.topMenu ul {
+    list-style-type: none; /* Remove default list styling */
+    display: flex; /* Use flexbox for the <ul> */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+.topMenu li {
+    margin-right: 15px; /* Adjust spacing between menu items */
+}
+
+.topMenu a {
+    text-decoration: none; /* Remove underline from links */
+    color: #333; /* Set text color */
+    font-weight: bold; /* Optionally make text bold */
+}
+
+.topMenu img {
+    width: 150px; /* Adjust image size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 5px; /* Rounded corners for image */
+    margin-right: 10px; /* Adjust spacing between image and links */
+}
+
+.product-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px auto;
+    max-width: 900px; /* Adjust as needed */
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow */
+    position: relative;
+    top:100px;
+}
+
+.product-image {
+    flex: 1; /* Take 50% width */
+    margin-right: 20px;
+}
+
+.product-image img {
+    max-width: 100%; /* Ensure image fits container */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Center image */
+}
+
+.product-details {
+    flex: 1; /* Take 50% width */
+}
+
+.product-details h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.product-details p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 10px;
+}
