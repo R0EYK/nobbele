@@ -1,19 +1,17 @@
+<!-- bagsPage.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" href="css/styles.css"> 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-  <script src="js/home.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop NOBBELE</title>
-    
+    <title>Bags</title>
+    <link rel="stylesheet" href="/css/bagsStyles.css"> <!-- Link to separated CSS file -->
 </head>
 <body>
-    <div class = "topMenu"> 
-        <img src="Images/MainLogo.jpg" alt="mainLogo">
+    <div class="topMenu">
+        <img src="/Images/MainLogo.jpg" alt="mainLogo">
         <ul>
-            <li><a href="/products/bags">BAGS</a> </li>
+            <li><a href="bags.html">BAGS</a> </li>
             <li><a href="wallets.html"> WALLETS</a> </li>
             <li><a href="accessories.html"> ACCESSORIES</a> </li>
             <li><a href="jewlery.html"> JEWLERY</a> </li>
@@ -32,13 +30,22 @@
               </svg>
         </div>
     </div>
-    <div class = "banner"> 
-    <img src="Images/SALEBANNER.png" alt="SALEBANNER">
-</div>
-<h1>Newest In:</h1>
-<div id="productContainer">
-  <!-- Example product link -->
-</div>
+    </div>
+
+    <h1 style="text-align: center; margin-top: 20px;">Bags</h1>
+
+    <div class="productContainer">
+        <% products.forEach(product => { %>
+            <div class="product">
+                <img src="<%= product.image[0] %>" alt="<%= product.name %>">
+                <h2><%= product.name %></h2>
+                <p>Description: <%= product.description %></p>
+                <p>Price: $<%= product.price %></p>
+                <p>Brand: <%= product.brand.name %></p>
+                <p>Gender: <%= product.gender %></p>
+            </div>
+        <% }); %>
+    </div>
 
 </body>
 </html>
