@@ -5,6 +5,7 @@ const path = require('path');
 const productRoutes = require('./routes/productRoutes');
 const brandRoutes = require('./routes/brandRoutes');
 const userRoutes = require('./routes/userRoutes');
+//const session = require('express-session');
 
 
 

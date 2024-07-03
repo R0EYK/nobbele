@@ -4,20 +4,25 @@ const router = express.Router();
 const User = require('../models/userModel');
 const saltRounds = 10;
 
-// הצגת טופס הרשמה
+router.get('/profile', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login'); // הפניה לדף התחברות אם המשתמש לא מחובר
+    }
+
+    res.render('profile', { user: req.session.user });
+});
+
 router.get('/register', (req, res) => {
     res.render('register');
 });
 
-// טיפול בהרשמה
 router.post('/register', async (req, res) => {
     try {
         const { username, password, firstName, lastName, email } = req.body;
 
-        // הצפנת סיסמה
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        // יצירת משתמש חדש
+        // new user
         const newUser = new User({
             username,
             password: hashedPassword,
