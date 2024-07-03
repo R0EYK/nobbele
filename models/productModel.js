@@ -18,12 +18,19 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     brand: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Brand',
         required: true
     },
     gender: {
         type: String,
         enum: ['Men', 'Women', 'Unisex'],
+        required: true
+    },
+
+    category: {
+        type: String,
+        enum: ['Bags', 'Wallets', 'Accessories', 'Jewelry'], // Restrict to these values
         required: true
     }
 });
