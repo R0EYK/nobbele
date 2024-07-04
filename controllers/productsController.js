@@ -23,6 +23,22 @@ exports.searchProducts = async (req, res) => {
     }
 };
 
+// Fetch all products categorized as "jewelry"
+exports.getJewelry = async (req, res) => {
+    const category = 'Jewelry'; // Assuming 'jewelry' is the category name
+    try {
+        const products = await Product.find({ category }).populate("brand").exec();
+
+        if (products.length === 0) {
+            return res.status(404).send('No jewelry found');
+        }
+
+        res.render('jewelryPage', { products }); // Render products on 'jewelryPage.ejs'
+    } catch (err) {
+        console.error('Error fetching jewelry:', err);
+        res.status(500).send('Server Error');
+    }
+};
 
 // Fetch all products categorized as "Bags"
 exports.getBags = async (req, res) => {

@@ -14,6 +14,9 @@ router.get('/Wallets', productsController.getWallets);
 // Route handler for fetching Wallets
 router.get('/Accessories', productsController.getAccessories);
 
+// Route handler for fetching Jewelry
+router.get('/Jewelry', productsController.getJewelry);
+
 // Route to fetch a list of products
 router.get('/list', productsController.listProducts);
 
