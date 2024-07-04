@@ -10,7 +10,7 @@ exports.searchProducts = async (req, res) => {
 
     try {
         // Perform a case-insensitive search for products with names containing the query
-        const results = await Product.find({ name: { $regex: new RegExp(query, 'i') } });
+        const results = await Product.find({ name: { $regex: new RegExp(query, 'i') } }).populate("brand").exec();
 
         if (results.length === 0) {
             return res.render('searchResult', { query, results, message: 'No results found.' });
