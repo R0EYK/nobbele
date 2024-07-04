@@ -5,6 +5,15 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const Brand = require('../models/brandModel');
 
+router.get('/bags', async (req, res) => {
+    try {
+        const products = await Product.find({ category: 'Bags' }).populate("brand").exec();
+        res.render('bagsPage', { products }); // Replace 'bagsPage' with your EJS template
+    } catch (err) {
+        console.error('Error fetching bags:', err);
+        res.status(500).send('Server Error');
+    }
+});
 
 // Route to create a new product
 router.post('/add', async (req, res) => {
@@ -34,7 +43,7 @@ router.post('/add', async (req, res) => {
 // Route to fetch a list of products
 router.get('/list', async (req, res) => {
     try {
-        const products = await Product.find().populate('brand' , 'name');
+        const products = await Product.find().populate("brand").exec();
         res.json(products);
     } catch (err) {
         console.error('Error fetching products:', err);
@@ -55,14 +64,12 @@ router.get('/:_id', async (req, res) => {
 
         console.log('Fetching product details for productId:', productId);
 
-        const product = await Product.findById(productId).populate('brand' , 'name');
-        console.log(product);///
+        const product = await Product.findById(productId).populate("brand").exec();
 
         if (!product) {
             console.log('Product not found for productId:', productId);
             return res.status(404).send('Product not found');
         }
-        console.log('Product brand:', product.brand.name);
 
         // Render productPage.ejs with product data
         res.render('productPage', { product: product });
@@ -72,5 +79,8 @@ router.get('/:_id', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+// Route to fetch products by category (Bags)
+
 
 module.exports = router;

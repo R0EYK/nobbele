@@ -44,7 +44,11 @@ app.get('/addProduct', (req, res) => {
 // Routes
 app.use('/products', productRoutes);
 app.use('/brands', brandRoutes); 
+<<<<<<< HEAD
 app.use('/', userRoutes);
+=======
+app.use('/bags', productRoutes); 
+>>>>>>> main
 
 
 // Start Server
