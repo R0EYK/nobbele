@@ -1,3 +1,4 @@
+/* Reset default styles */
 .html {
     font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 0px;
@@ -11,11 +12,10 @@
     justify-content: space-between; /* Distribute items evenly along the main axis */
     padding: 10px;
     position: fixed; /* Fix the menu to the top */
-    width: 98%; /* Full width */
+    width: 100%; /* Full width */
     background-color: white; /* Add background color */
     border-bottom: 1px solid black; /* Add a bottom border */
     z-index: 1000; /* Ensure it stays above other elements */
-    top:0;
 }
 
 .topMenu ul {
@@ -40,47 +40,42 @@
     height: auto; /* Maintain aspect ratio */
     border-radius: 5px; /* Rounded corners for image */
     margin-right: 10px; /* Adjust spacing between image and links */
-    top:0;
 }
 
-.product-container {
+.productContainer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: flex-start;
-    margin: 20px auto;
-    max-width: 900px; /* Adjust as needed */
-    background-color: #fff;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow */
-    position: relative;
-    top:100px;
+    margin-top: 80px; /* Ensure it starts below the top menu */
 }
 
-.product-image {
-    flex: 1; /* Take 50% width */
-    margin-right: 20px;
+.product {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin: 15px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    align-items: center;
 }
 
-.product-image img {
+.product img {
     max-width: 100%; /* Ensure image fits container */
-    height: auto;
-    display: block;
-    margin: 0 auto; /* Center image */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 10px; /* Adjust spacing between image and text */
 }
 
-.product-details {
-    flex: 1; /* Take 50% width */
-}
-
-.product-details h2 {
-    font-size: 2em;
+.product h2 {
+    font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
-.product-details p {
-    font-size: 1.2em;
-    color: #555;
-    margin-bottom: 10px;
+.product p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 5px;
 }
 
 .add-to-cart-button {
@@ -103,10 +98,12 @@
     background-color: #e04a17; /* Even darker tomato */
 }
 
-.emojis{
-    display:flex;
+.emojis {
+    display: flex;
     flex-direction: row;
+    align-items: center; /* Align items vertically in the center */
 }
-.emojis svg{
-    margin:10px;
+
+.emojis svg {
+    margin: 10px; /* Adjust spacing around emojis */
 }

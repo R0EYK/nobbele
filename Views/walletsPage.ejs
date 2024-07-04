@@ -1,21 +1,24 @@
+<!-- bagsPage.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= product.name %> - Product Page</title>
-    <link rel="stylesheet" href="/css/product.css"> <!-- Ensure correct path -->
+    <title>Bags</title>
+    <link rel="stylesheet" href="/css/bagsStyles.css"> <!-- Link to separated CSS file -->
+    <script src="../js/product.js"></script>
+
 </head>
 <body>
     <div class="topMenu">
         <a href='/'><img src="/Images/MainLogo.jpg" alt="Main Logo"></a>
         <ul>
-            <li><a href="../products/Bags">BAGS</a></li>
-            <li><a href="../products/Wallets">WALLETS</a></li>
-            <li><a href="../products/Accessories">ACCESSORIES</a></li>
-            <li><a href="../products/Jewlery">JEWELRY</a></li>
-            <li><a href="/brands.html">BRANDS</a></li>
-            <li><a href="/sale.html">SALE</a></li>
+            <li><a href="/products/Bags">BAGS</a> </li>
+            <li><a href="/products/Wallets"> WALLETS</a> </li>
+            <li><a href="/products/Accessories"> ACCESSORIES</a> </li>
+            <li><a href="/products/Jewelry"> JEWLERY</a> </li>
+            <li><a href="brands.html"> BRANDS</a> </li>
+            <li><a href="sale.html"> SALE</a> </li>
         </ul>
         <div class="emojis"> 
             <div class="search-container">
@@ -43,22 +46,24 @@
           </div>
     </div>
 
-    <div class="product-container">
-        <div class="product-image">
-            <img src="<%= product.image[0] %>" alt="<%= product.name %>">
-        </div>
-        <div class="product-details">
-            <h2><%= product.name %></h2>
-            <p>Description: <%= product.description %></p>
-            <p>Price: $<%= product.price %></p>
-            <p>Brand: <%= product.brand.name %></p>
-            <p>Gender: <%= product.gender %></p>
-            <button class="add-to-cart-button">Add to Cart</button>
-        </div>
+    <h1 style="text-align: center; margin-top: 20px;">Wallets</h1>
+
+    <div class="productContainer">
+        <% products.forEach(product => { %>
+            <div class="product">
+                <img src="<%= product.image[0] %>" alt="<%= product.name %>">
+                <h2><%= product.name %></h2>
+                <p>Description: <%= product.description %></p>
+                <p>Price: $<%= product.price %></p>
+                <p>Brand: <%= product.brand.name %></p>
+                <p>Gender: <%= product.gender %></p>
+                <form action="/cart/add" method="post">
+                    <input type="hidden" name="productId" value="<%= product._id %>">
+                    <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                </form>
+            </div>
+        <% }); %>
     </div>
 
-
-
-    <script src="/js/product.js"></script> <!-- Ensure correct path -->
 </body>
 </html>

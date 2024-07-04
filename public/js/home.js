@@ -21,10 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const productPrice = document.createElement('p');
                 productPrice.textContent = `$${product.price}`;
+                 // Add to Cart button
+                 const addToCartButton = document.createElement('button');
+                 addToCartButton.textContent = 'Add to Cart';
+                 addToCartButton.className = 'add-to-cart-button';
 
                 productDiv.appendChild(productImage);
                 productDiv.appendChild(productName);
                 productDiv.appendChild(productPrice);
+                productDiv.appendChild(addToCartButton);
+
 
                 // Create link to product detail page
                 const productLink = document.createElement('a');
@@ -35,4 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         })
         .catch(err => console.error('Error fetching products:', err));
+});
+//Seach Icon
+document.addEventListener('DOMContentLoaded', () => {
+    const searchIcon = document.getElementById('searchIcon');
+    const searchForm = document.getElementById('searchForm');
+
+    searchIcon.addEventListener('click', () => {
+        if (searchForm.style.display === 'none' || searchForm.style.display === '') {
+            searchForm.style.display = 'flex'; // Adjust display style as needed (e.g., 'block', 'inline-block')
+        } else {
+            searchForm.style.display = 'none';
+        }
+    });
 });
