@@ -5,12 +5,20 @@ const path = require('path');
 const productRoutes = require('./routes/productRoutes');
 const brandRoutes = require('./routes/brandRoutes');
 const userRoutes = require('./routes/userRoutes');
-//const session = require('express-session');
-
-
+const authRoutes = require('./routes/authRoutes');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+  }));
+
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 // Middleware
@@ -44,11 +52,9 @@ app.get('/addProduct', (req, res) => {
 // Routes
 app.use('/products', productRoutes);
 app.use('/brands', brandRoutes); 
-<<<<<<< HEAD
-app.use('/', userRoutes);
-=======
-app.use('/bags', productRoutes); 
->>>>>>> main
+app.use(userRoutes);
+app.use(authRoutes);
+
 
 
 // Start Server
