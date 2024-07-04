@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => console.error('Error fetching products:', err));
 });
-//Seach Icon
+//Search Icon
 document.addEventListener('DOMContentLoaded', () => {
     const searchIcon = document.getElementById('searchIcon');
     const searchForm = document.getElementById('searchForm');
@@ -52,6 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
             searchForm.style.display = 'flex'; // Adjust display style as needed (e.g., 'block', 'inline-block')
         } else {
             searchForm.style.display = 'none';
-        }
+        } // Echo
     });
 });

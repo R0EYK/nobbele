@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchForm.style.display === 'none' || searchForm.style.display === '') {
             searchForm.style.display = 'flex'; // Adjust display style as needed (e.g., 'block', 'inline-block')
         } else {
-            searchForm.style.display = 'none';
+            searchForm.style.display = 'none'; // Roey
         }
     });
 });
