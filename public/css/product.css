@@ -82,3 +82,31 @@
     color: #555;
     margin-bottom: 10px;
 }
+
+.add-to-cart-button {
+    background-color: #ff7f3e; /* Tomato */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Add some space above the button */
+}
+
+.add-to-cart-button:hover {
+    background-color: #ff5a1f; /* Darker tomato */
+}
+
+.add-to-cart-button:active {
+    background-color: #e04a17; /* Even darker tomato */
+}
+
+.emojis{
+    display:flex;
+    flex-direction: row;
+}
+.emojis svg{
+    margin:10px;
+}
