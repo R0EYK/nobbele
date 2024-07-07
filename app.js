@@ -4,9 +4,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const productRoutes = require('./routes/productRoutes');
 const brandRoutes = require('./routes/brandRoutes');
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 // Middleware
@@ -40,6 +43,9 @@ app.get('/addProduct', (req, res) => {
 // Routes
 app.use('/products', productRoutes);
 app.use('/brands', brandRoutes); 
+app.use(userRoutes);
+app.use(authRoutes);
+
 
 
 // Start Server
