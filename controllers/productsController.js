@@ -1,8 +1,21 @@
 // controllers/productsController.js
 
 const Product = require('../models/productModel');
+const Brand = require('../models/brandModel');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+
+// Controller method to get products by brandId
+exports.getProductsByBrandId = async (req, res) => {
+    const brandId = req.params.brandId;
+    try {
+        const products = await Product.find({ brand: brandId }).populate("brand").exec();
+        res.render('productByBrand', { products });
+    } catch (err) {
+        console.error('Error fetching products:', err);
+        res.status(500).send('Error fetching products');
+    }
+};
 
 // Controller method for handling product searches
 exports.searchProducts = async (req, res) => {
@@ -22,6 +35,7 @@ exports.searchProducts = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
 
 // Fetch all products categorized as "jewelry"
 exports.getJewelry = async (req, res) => {

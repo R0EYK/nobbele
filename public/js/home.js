@@ -56,3 +56,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownContent = document.querySelector('.dropdown-content');
+
+    dropdown.addEventListener('mouseover', async () => {
+        if (dropdownContent.children.length === 0) {
+            try {
+                const response = await fetch('/brands/list');
+                const brands = await response.json();
+
+                brands.forEach(brand => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = `/brands/${brand._id}`;
+                    a.textContent = brand.name;
+                    li.appendChild(a);
+                    dropdownContent.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching brand list:', error);
+            }
+        }
+        dropdownContent.style.display = 'block';
+    });
+
+    dropdown.addEventListener('mouseleave', () => {
+        dropdownContent.style.display = 'none';
+    });
+});
