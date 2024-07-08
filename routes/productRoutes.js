@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/productsController');
 
+
 // Route to handle product search
 router.get('/search', productsController.searchProducts);
 
@@ -19,12 +20,11 @@ router.get('/Jewelry', productsController.getJewelry);
 
 // Route to fetch a list of products
 router.get('/list', productsController.listProducts);
+// Route to fetch a list of products by brand id
+
+router.get('/brands/:brandId', productsController.getProductsByBrandId);
 
 // Route to fetch and render product details by productId
 router.get('/:_id', productsController.getProductById);
-
-
-
-
 
 module.exports = router;
