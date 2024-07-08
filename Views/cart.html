@@ -1,0 +1,17 @@
+router.get('/cart', async (req, res) => {
+    const userId = req.session.userId; // קבלת מזהה המשתמש מהסשן
+  
+    try {
+      const cart = await Cart.findOne({ userId }).populate('products.productId');
+  
+      if (!cart) {
+        return res.status(200).json({ products: [] });
+      }
+  
+      res.status(200).json({ products: cart.products });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to retrieve cart', error });
+    }
+  });
+  
+  module.exports = router;

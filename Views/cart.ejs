@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= product.name %> - Product Page</title>
-    <link rel="stylesheet" href="/css/product.css"> <!-- Ensure correct path -->
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="/css/styles.css"> 
 </head>
 <body>
     <div class="topMenu"> 
-        <img src="/Images/MainLogo.jpg" alt="mainLogo">
+        <img src="Images/MainLogo.jpg" alt="mainLogo">
         <ul>
-            <li><a href="../products/Bags">BAGS</a></li>
-            <li><a href="../products/Wallets">WALLETS</a></li>
-            <li><a href="../products/Accessories">ACCESSORIES</a></li>
-            <li><a href="../products/Jewlery">JEWELRY</a></li>
-            <li><a href="/brands.html">BRANDS</a></li>
-            <li><a href="/sale.html">SALE</a></li>
+            <li><a href="/products/Bags">BAGS</a></li>
+            <li><a href="/products/Wallets">WALLETS</a></li>
+            <li><a href="/products/Accessories">ACCESSORIES</a></li>
+            <li><a href="/products/Jewelry">JEWELRY</a></li>
+            <li><a href="/brands">BRANDS</a></li>
+            <li><a href="/sale">SALE</a></li>
         </ul>
         <div class="emojis"> 
             <div class="search-container">
@@ -55,22 +56,26 @@
             </div>
         </div>
     </div>
+    <div id="cartTitle"><h1>Your Shopping Cart</h1></div>
 
-
-    <div class="product-container">
-        <div class="product-image">
-            <img src="<%= product.image[0] %>" alt="<%= product.name %>">
-        </div>
-        <div class="product-details">
-            <h2><%= product.name %></h2>
-            <p>Description: <%= product.description %></p>
-            <p>Price: $<%= product.price %></p>
-            <p>Brand: <%= product.brand.name %></p>
-            <p>Gender: <%= product.gender %></p>
-            <button class="add-to-cart-button" data-product-id="<%= product._id %>" data-quantity="1">Add to Cart</button>
-        </div>
+    <div class="cart-container">
+        <% if (products.length === 0) { %>
+            <p class="empty-cart">Your cart is empty</p>
+            <% if (!loggedIn) { %>
+                <p class="login-message">You need to <a href="/login">login</a> to view your cart</p>
+            <% } %>
+        <% } else { %>
+            <% products.forEach(product => { %>
+                <div class="cart-item">
+                    <img src="<%= product.productId.image[0] %>" alt="<%= product.productId.name %>" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <h3><%= product.productId.name %></h3>
+                        <p class="price">Price: $<%= product.productId.price %></p>
+                    </div>
+                </div>
+            <% }); %>
+        <% } %>
     </div>
-
 
     <script src="/js/product.js"></script> <!-- Ensure correct path -->
 </body>

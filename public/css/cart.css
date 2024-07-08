@@ -1,0 +1,70 @@
+/* cart.css */
+
+/* Overall page layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+.cart-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 130px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.cartTitle{
+    height: 80px;
+}
+
+.cart-item {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    align-items: center;
+}
+
+.cart-item img {
+    max-width: 100px;
+    margin-right: 20px;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.cart-item-info p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.cart-item-info .price {
+    font-weight: bold;
+}
+
+.empty-cart {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #666;
+}
+
+.login-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #666;
+}

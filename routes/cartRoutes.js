@@ -39,12 +39,13 @@ router.get('/cart', async (req, res) => {
     const cart = await Cart.findOne({ userId }).populate('products.productId');
 
     if (!cart) {
-      return res.status(200).json({ products: [] });
+      return res.render('cart', { products: [] }); // תצוגת עמוד הקניות עם מערך ריק אם אין מוצרים בסל
     }
 
-    res.status(200).json({ products: cart.products });
+    res.render('cart', { products: cart.products }); // תצוגת עמוד הקניות עם רשימת המוצרים בסל
   } catch (error) {
-    res.status(500).json({ message: 'Failed to retrieve cart', error });
+    console.error('Failed to retrieve cart', error);
+    res.status(500).send('Failed to retrieve cart'); // שגיאה במקרה של בעיה בשליפת הסל
   }
 });
 
