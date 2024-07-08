@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 brands.forEach(brand => {
                     const li = document.createElement('li');
                     const a = document.createElement('a');
-                    a.href = `brand/${brand._id}`;
+                    a.href = `/products/brand/${brand._id}`;
                     a.textContent = brand.name;
                     li.appendChild(a);
                     dropdownContent.appendChild(li);

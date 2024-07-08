@@ -12,22 +12,23 @@
     <div class="topMenu"> 
         <a href="/">
             <img src="/Images/MainLogo.jpg" alt="mainLogo">
-        </a>        <ul>
+        </a>
+        <ul>
             <li><a href="/products/Bags">BAGS</a></li>
             <li><a href="/products/Wallets">WALLETS</a></li>
             <li><a href="/products/Accessories">ACCESSORIES</a></li>
-            <li><a href="/products/Jewelry">JEWLERY</a></li>
-            <li><a href="/brands">BRANDS</a></li>
+            <li><a href="/products/Jewelry">JEWELRY</a></li>
+            <li class="dropdown">
+                <a href="/brands" class="dropbtn">BRANDS</a>
+                <ul class="dropdown-content"></ul>
+            </li>
             <li><a href="/sale">SALE</a></li>
         </ul>
         <div class="emojis"> 
             <div class="search-container">
-                <!-- Search icon to toggle search input -->
                 <svg id="searchIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                 </svg>
-    
-                <!-- Search input initially hidden -->
                 <form id="searchForm" action="/products/search" method="get" style="display: none;">
                     <input type="text" placeholder="Search products..." name="q">
                     <button type="submit">
@@ -37,8 +38,6 @@
                     </button>
                 </form>
             </div>
-            
-            <!-- Always show profile and cart emojis -->
             <div class="profile-emoji">
                 <a href="<%= loggedIn ? '/profile' : '/login' %>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
@@ -58,6 +57,7 @@
             </div>
         </div>
     </div>
+
     <h1 style="text-align: center; margin-top: 20px;">Accessories</h1>
 
     <div class="productContainer">

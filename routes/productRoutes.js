@@ -22,7 +22,7 @@ router.get('/Jewelry', productsController.getJewelry);
 router.get('/list', productsController.listProducts);
 // Route to fetch a list of products by brand id
 
-router.get('/brands/:brandId', productsController.getProductsByBrandId);
+router.get('/brand/:brandId', productsController.getProductsByBrand);
 
 // Route to fetch and render product details by productId
 router.get('/:_id', productsController.getProductById);
