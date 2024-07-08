@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
+/// On hover the brands on nav this makes the drop down list fetch our brands and display them.
 document.addEventListener("DOMContentLoaded", () => {
     const dropdown = document.querySelector('.dropdown');
     const dropdownContent = document.querySelector('.dropdown-content');
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 brands.forEach(brand => {
                     const li = document.createElement('li');
                     const a = document.createElement('a');
-                    a.href = `/brands/${brand._id}`;
+                    a.href = `products/brand/${brand._id}`;
                     a.textContent = brand.name;
                     li.appendChild(a);
                     dropdownContent.appendChild(li);

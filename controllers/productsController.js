@@ -5,18 +5,32 @@ const Brand = require('../models/brandModel');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
-// Controller method to get products by brandId
-exports.getProductsByBrandId = async (req, res) => {
-    const brandId = req.params.brandId;
-    try {
-        const products = await Product.find({ brand: brandId }).populate("brand").exec();
-        res.render('productByBrand', { products });
-    } catch (err) {
-        console.error('Error fetching products:', err);
-        res.status(500).send('Error fetching products');
-    }
-};
 
+exports.getProductsByBrand = async (req, res) => {
+    try {
+      const brandId = req.params.brandId;
+  
+      console.log('Brand ID:', brandId);
+      console.log('Is valid ObjectId:', mongoose.Types.ObjectId.isValid(brandId));
+  
+      // Check if brandId is a valid ObjectId
+      if (!mongoose.Types.ObjectId.isValid(brandId)) {
+        return res.status(400).send('Invalid brand ID');
+      }
+  
+      // Using mongoose.Types.ObjectId to convert brandId
+      const products = await Product.find({ brand: new mongoose.Types.ObjectId(brandId) })
+                                    .populate("brand")
+                                    .exec();
+  
+      console.log('Fetched products:', products);
+  
+      res.render('productByBrand', { products });
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      res.status(500).send('Error fetching products: ' + error.message);
+    }
+  };
 // Controller method for handling product searches
 exports.searchProducts = async (req, res) => {
     const query = req.query.q; // Get the search query from the URL parameter

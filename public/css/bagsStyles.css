@@ -6,6 +6,11 @@
     background-color: white;
 }
 
+body{
+    display:flex;
+    flex-direction:column;
+}
+
 .topMenu {
     display: flex; /* Use flexbox */
     align-items: center; /* Align items vertically in the center */
@@ -107,4 +112,34 @@
     margin:10px;
 }
 
+/* Additional CSS for the dropdown */
+.dropdown-content {
+    display: none; /* Hide the dropdown content by default */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    flex-direction: column; /* Ensures items are in a column */
+    padding: 0; /* Removes extra padding */
+}
 
+.dropdown-content li {
+    float: none; /* Removes floating for list items */
+}
+
+.dropdown-content li a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content li a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block; /* Show the dropdown content on hover */
+}
