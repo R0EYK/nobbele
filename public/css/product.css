@@ -110,3 +110,13 @@
 .emojis svg{
     margin:10px;
 }
+
+.profile-emoji, .cart-emoji {
+    display: flex;
+    align-items: center;
+}
+
+.profile-emoji a, .cart-emoji a {
+    display: flex;
+    align-items: center;
+}
