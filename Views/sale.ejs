@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop NOBBELE</title>
-    <link rel="stylesheet" href="/css/styles.css"> 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <script src="/js/home.js" defer></script> <!-- Ensure JavaScript is loaded after the page -->
+    <title>Sale</title>
+    <link rel="stylesheet" href="/css/bagsStyles.css"> <!-- Link to your CSS file -->
+    <script src="/js/product.js"></script>
+
 </head>
 <body>
     <div class="topMenu"> 
@@ -58,13 +58,31 @@
         </div>
     </div>
 
-    <div class="banner"> 
-        <img src="Images/SALEBANNER.png" alt="SALEBANNER">
+    <h1 style="text-align: center; margin-top: 20px;">Sale</h1>
+
+    <div class="productContainer">
+        <% if (products.length > 0) { %>
+            <% products.forEach(product => { %>
+                <% if (product.discount && product.discount > 0) { %>
+                    <div class="product">
+                        <img src="<%= product.image[0] %>" alt="<%= product.name %>">
+                        <h2><%= product.name %></h2>
+                        <p><%= product.description %></p>
+                        <p>Original Price: <s>$<%= product.price %></s></p>
+                        <p>Discounted Price: $<%= (product.price - product.discount).toFixed(2) %></p>
+                        <p>Brand: <%= product.brand.name %></p>
+                        <p>Gender: <%= product.gender %></p>
+                        <form action="/cart/add" method="post">
+                            <input type="hidden" name="productId" value="<%= product._id %>">
+                            <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                        </form>
+                    </div>
+                <% } %>
+            <% }); %>
+        <% } else { %>
+            <p>No products on sale at the moment.</p>
+        <% } %>
     </div>
 
-    <h1>Newest In:</h1>
-    <div id="productContainer">
-        <!-- Example product link -->
-    </div>
 </body>
 </html>

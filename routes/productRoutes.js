@@ -23,6 +23,9 @@ router.get('/list', productsController.listProducts);
 // Route to fetch a list of products by brand id
 
 router.get('/brand/:brandId', productsController.getProductsByBrand);
+// Route to fetch a list of products for SALE page
+router.get('/sale', productsController.getSaleProducts);
+
 
 // Route to fetch and render product details by productId
 router.get('/:_id', productsController.getProductById);

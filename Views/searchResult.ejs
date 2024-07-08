@@ -22,7 +22,7 @@
                 <a href="/brands" class="dropbtn">BRANDS</a>
                 <ul class="dropdown-content"></ul>
             </li>
-            <li><a href="/sale">SALE</a></li>
+            <li><a href="/products/sale">SALE</a></li>
         </ul>
         <div class="emojis"> 
             <div class="search-container">
@@ -72,9 +72,13 @@
                 <div class="product">
                     <img src="<%= product.image[0] %>" alt="<%= product.name %>">
                     <h2><%= product.name %></h2>
-                    <p>Description: <%= product.description %></p>
-                    <p>Price: $<%= product.price %></p>
-                    <p>Brand: <%= product.brand.name %></p>
+                    <p><%= product.description %></p>
+                    <% if (product.discount && product.discount > 0) { %>
+                        <p>Original Price: <s>$<%= product.price %></s></p>
+                        <p>Discounted Price: $<%= (product.price - product.discount).toFixed(2) %></p>
+                    <% } else { %>
+                        <p>Price: $<%= product.price %></p>
+                    <% } %>                    <p>Brand: <%= product.brand.name %></p>
                     <p>Gender: <%= product.gender %></p>
                     <form action="/cart/add" method="post">
                         <input type="hidden" name="productId" value="<%= product._id %>">
