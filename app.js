@@ -6,6 +6,7 @@ const productRoutes = require('./routes/productRoutes');
 const brandRoutes = require('./routes/brandRoutes');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 const session = require('express-session');
 
 
@@ -64,6 +65,8 @@ app.use('/products', productRoutes);
 app.use('/brands', brandRoutes); 
 app.use(userRoutes);
 app.use(authRoutes);
+app.use(cartRoutes);
+
 
 
 
