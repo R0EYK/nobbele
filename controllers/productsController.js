@@ -6,6 +6,16 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
 
+exports.getSaleProducts = async (req, res) => {
+    try {
+        // Find products with a discount
+        const products = await Product.find({ discount: { $gt: 0 } }).populate("brand").exec();
+        res.render('sale', { products });
+    } catch (error) {
+        res.status(500).send('Error fetching sale products');
+    }
+};
+
 exports.getProductsByBrand = async (req, res) => {
     try {
       const brandId = req.params.brandId;
