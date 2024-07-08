@@ -21,10 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const productPrice = document.createElement('p');
                 productPrice.textContent = `$${product.price}`;
+                 // Add to Cart button
+                 const addToCartButton = document.createElement('button');
+                 addToCartButton.textContent = 'Add to Cart';
+                 addToCartButton.className = 'add-to-cart-button';
 
                 productDiv.appendChild(productImage);
                 productDiv.appendChild(productName);
                 productDiv.appendChild(productPrice);
+                productDiv.appendChild(addToCartButton);
+
 
                 // Create link to product detail page
                 const productLink = document.createElement('a');
@@ -37,21 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => console.error('Error fetching products:', err));
 });
 
-function checkAuthenticated(event) {
-    event.preventDefault(); // מונע ברירת מחדל להתנהג במונע ברירת מחדל
-    // בדיקה אם המשתמש מחובר
-    if (isLoggedIn()) {
-      window.location.href = event.target.closest('a').getAttribute('href'); // שולח את המשתמש לעמוד המתאים
-    } else {
-      // אם המשתמש לא מחובר, יכול להיות כאן הודעה או הפניה לדף ההתחברות
-      alert('You are not log in');
-      // לדוגמה:
-      // window.location.href = '/login';
-    }
-  }
 
-  function isLoggedIn() {
-    // בדיקה אם יש session או פרטי משתמש מאוחסנים בדפדפן
-    return (sessionStorage.getItem('user') !== null);
-    // זה דוגמה וכמובן יש עליך לכתוב בצד שרת קוד שבו תבדוק האם המשתמש הוא מחובר או אינו מחובר ולאחר מכן תחזיר תשובה ללקוח.
-  }
+//Search Icon
+document.addEventListener('DOMContentLoaded', () => {
+    const searchIcon = document.getElementById('searchIcon');
+    const searchForm = document.getElementById('searchForm');
+    searchIcon.addEventListener('click', () => {
+        if (searchForm.style.display === 'none' || searchForm.style.display === '') {
+            searchForm.style.display = 'flex'; // Adjust display style as needed (e.g., 'block', 'inline-block')
+        } else {
+            searchForm.style.display = 'none'; 
+        }
+    });
+});

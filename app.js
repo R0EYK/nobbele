@@ -6,9 +6,29 @@ const productRoutes = require('./routes/productRoutes');
 const brandRoutes = require('./routes/brandRoutes');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const session = require('express-session');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Use express-session middleware
+app.use(session({
+    secret: 'random-key', // Replace with a long, randomly generated string (used to sign the session ID cookie)
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // Set to true if using HTTPS
+      maxAge: 24 * 60 * 60 * 1000, // Session expiry time (e.g., 1 day)
+    }
+  }));
+
+  // Middleware to pass loggedIn status to all views
+app.use((req, res, next) => {
+    res.locals.loggedIn = req.session.loggedIn || false;
+    res.locals.username = req.session.username || '';
+    next();
+  });
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -30,11 +50,10 @@ mongoose.connect('mongodb+srv://roeyk70:123ad123ad@nobbele.9nzlam0.mongodb.net/m
 // Serve static files from 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve home.html on root path
+// Example route rendering home.ejs
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Views', 'home.html'));
-});
-
+    res.render('home', { loggedIn: req.session.loggedIn }); // Pass loggedIn status to the template
+  });
 // Serve addProduct.html
 app.get('/addProduct', (req, res) => {
     res.sendFile(path.join(__dirname, 'Views', 'addProduct.html'));
@@ -45,6 +64,8 @@ app.use('/products', productRoutes);
 app.use('/brands', brandRoutes); 
 app.use(userRoutes);
 app.use(authRoutes);
+
+
 
 
 
