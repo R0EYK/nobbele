@@ -44,3 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+//Search Icon
+document.addEventListener('DOMContentLoaded', () => {
+    const searchIcon = document.getElementById('searchIcon');
+    const searchForm = document.getElementById('searchForm');
+    searchIcon.addEventListener('click', () => {
+        if (searchForm.style.display === 'none' || searchForm.style.display === '') {
+            searchForm.style.display = 'flex'; // Adjust display style as needed (e.g., 'block', 'inline-block')
+        } else {
+            searchForm.style.display = 'none'; 
+        }
+    });
+});

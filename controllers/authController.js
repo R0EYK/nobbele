@@ -40,13 +40,16 @@ exports.postLogin = async (req, res) => {
     req.session.username = user.username;
     req.session.loggedIn = true;
 
-    res.send('User logged in successfully!');
+    // Redirect to the home page
+    res.redirect('/');
   } catch (error) {
     res.status(500).send('Error logging in: ' + error.message);
   }
 };
 
-exports.checkLoggedIn = (req, res, next) => {
-  res.locals.loggedIn = req.session.loggedIn || false;
+exports.redirectIfLoggedIn = (req, res, next) => {
+  if (req.session && req.session.loggedIn) {
+    return res.redirect('/');
+  }
   next();
 };

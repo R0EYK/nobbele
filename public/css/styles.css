@@ -89,8 +89,6 @@ h1 {
     margin-right: 20px;
     max-width: 100%; /* Ensure image fits container */
     height: auto;
-    
-    
 }
 
 .product h2 {
@@ -122,10 +120,24 @@ h1 {
 .add-to-cart-button:active {
     background-color: #e04a17; /* Even darker shade */
 }
-.emojis{
-    display:flex;
+
+.emojis {
+    display: flex;
     flex-direction: row;
+    align-items: center;
 }
-.emojis svg{
-    margin:10px;
+
+.emojis svg {
+    margin: 10px;
+    cursor: pointer; /* Ensure the SVGs are clickable */
+}
+
+.profile-emoji, .cart-emoji {
+    display: flex;
+    align-items: center;
+}
+
+.profile-emoji a, .cart-emoji a {
+    display: flex;
+    align-items: center;
 }
