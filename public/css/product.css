@@ -120,3 +120,57 @@
     display: flex;
     align-items: center;
 }
+
+/* Dropdown styles */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    flex-direction: column;
+    padding: 0;
+}
+
+.dropdown-content li {
+    float: none;
+}
+
+.dropdown-content li a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content li a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Styling for status dots */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 0px; /* Adjust as needed */
+    vertical-align: middle; /* Aligns vertically with the text */
+    position: relative; /* Enables positioning */
+    top: -10px; /* Adjust vertically as needed */
+    right:14px;
+}
+
+
+.logged-in {
+    background-color: green;
+}
+
+.not-logged-in {
+    background-color: red;
+}

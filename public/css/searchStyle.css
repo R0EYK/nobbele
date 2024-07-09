@@ -12,7 +12,7 @@
     justify-content: space-between; /* Distribute items evenly along the main axis */
     padding: 10px;
     position: fixed; /* Fix the menu to the top */
-    width: 100%; /* Full width */
+    width: 98%; /* Full width */
     background-color: white; /* Add background color */
     border-bottom: 1px solid black; /* Add a bottom border */
     z-index: 1000; /* Ensure it stays above other elements */
@@ -47,7 +47,6 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
-    margin-top: 80px; /* Ensure it starts below the top menu */
 }
 
 .product {
@@ -59,6 +58,7 @@
     width: 300px;
     text-align: center;
     align-items: center;
+    top:60px;
 }
 
 .product img {
@@ -70,6 +70,20 @@
 .product h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
+}
+
+/* Ensure h1 tag styles are applied */
+h1 {
+    font-size: 2rem; /* Adjust font size */
+    margin-bottom: 30px; /* Add space below the header */
+    text-align: center; /* Center-align the text */
+}
+
+/* Adjust page-header styles */
+.page-header {
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .product p {
@@ -139,3 +153,26 @@
 .dropdown:hover .dropdown-content {
     display: block; /* Show the dropdown content on hover */
 }
+
+/* Styling for status dots */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 0px; /* Adjust as needed */
+    vertical-align: middle; /* Aligns vertically with the text */
+    position: relative; /* Enables positioning */
+    top: -10px; /* Adjust vertically as needed */
+    right:14px;
+}
+
+
+.logged-in {
+    background-color: green;
+}
+
+.not-logged-in {
+    background-color: red;
+}
+
