@@ -110,23 +110,31 @@ exports.getWallets = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
-// Fetch all products categorized as "Accessories"
+
+// Fetch all products categorized as "Accessories" with optional sorting
 exports.getAccessories = async (req, res) => {
-    const category = 'Accessories'; // 
+    const category = 'Accessories';
+    const { order } = req.query;
     try {
-        const products = await Product.find({ category }).populate("brand").exec();
+        let products;
+        if (order === 'asc') {
+            products = await Product.find({ category }).sort({ price: 1 }).populate("brand").exec();
+        } else if (order === 'desc') {
+            products = await Product.find({ category }).sort({ price: -1 }).populate("brand").exec();
+        } else {
+            products = await Product.find({ category }).populate("brand").exec();
+        }
 
         if (products.length === 0) {
             return res.status(404).send('No Accessories Found');
         }
 
-        res.render('accessoriesPage', { products }); // Render products on 'walletsPage.ejs'
+        res.render('accessoriesPage', { products });
     } catch (err) {
         console.error('Error fetching accessories:', err);
         res.status(500).send('Server Error');
     }
 };
-
 // Fetch a list of products
 exports.listProducts = async (req, res) => {
     try {

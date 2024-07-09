@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(products => {
             // Sort products by date added (assuming there's a 'createdAt' field)
 
-            // Take the last 4 products
-            const last4Products = products.slice(-4);
+            // Take 5 newest  products
+            const last4Products = products.slice(-5);
 
             const productContainer = document.getElementById('productContainer');
             last4Products.forEach(product => {
@@ -21,16 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const productPrice = document.createElement('p');
                 productPrice.textContent = `$${product.price}`;
-                 // Add to Cart button
-                 const addToCartButton = document.createElement('button');
-                 addToCartButton.textContent = 'Add to Cart';
-                 addToCartButton.className = 'add-to-cart-button';
+
+                // Add to Cart button
+                const addToCartButton = document.createElement('button');
+                addToCartButton.textContent = 'Add to Cart';
+                addToCartButton.className = 'add-to-cart-button';
 
                 productDiv.appendChild(productImage);
                 productDiv.appendChild(productName);
                 productDiv.appendChild(productPrice);
                 productDiv.appendChild(addToCartButton);
-
 
                 // Create link to product detail page
                 const productLink = document.createElement('a');

@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Get product ID from URL
     const productId = window.location.pathname.split('/').pop();
 
-    // Fetch product details
+    // Fetch product details (if needed for the product details page)
     fetch(`/products/${productId}`)
         .then(response => response.json())
         .then(product => {
@@ -16,7 +15,57 @@ document.addEventListener('DOMContentLoaded', () => {
             document.title = `${product.name} - Product Details`; // Update page title
         })
         .catch(err => console.error('Error fetching product details:', err));
+
+    // Sort products by price
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', () => {
+            const sortOrder = sortSelect.value;
+
+            // Fetch sorted products
+            fetch(`/products/accessories?sort=${sortOrder}`)
+                .then(response => response.json())
+                .then(products => {
+                    // Assuming you have a function to update the product list
+                    updateProductList(products);
+                })
+                .catch(err => console.error('Error fetching sorted products:', err));
+        });
+    }
+
+    // Function to update product list on the page
+    function updateProductList(products) {
+        const productContainer = document.querySelector('.productContainer');
+        if (productContainer) {
+            productContainer.innerHTML = ''; // Clear existing products
+
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+
+                // Build product HTML
+                productDiv.innerHTML = `
+                    <img src="${product.image[0]}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p>${product.description}</p>
+                    <p>Price: $${product.price}</p>
+                    <p>Brand: ${product.brand.name}</p>
+                    <p>Gender: ${product.gender}</p>
+                    <form action="/cart/add" method="post">
+                        <input type="hidden" name="productId" value="${product._id}">
+                        <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                    </form>
+                `;
+
+                productContainer.appendChild(productDiv);
+            });
+        }
+    }
 });
+
+
+
+
 
 //Search Icon
 document.addEventListener('DOMContentLoaded', () => {
