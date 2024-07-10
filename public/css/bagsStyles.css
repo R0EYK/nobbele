@@ -132,6 +132,7 @@ a{
 }
 
 
+
 /* Styling for status dots */
 .status-dot {
     width: 8px;
@@ -215,3 +216,10 @@ a{
     background-color: #e04a17; /* Even darker tomato */
 }
 
+/* Centering the filters */
+.filters {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-top: 20px; /* Adjust as needed */
+}

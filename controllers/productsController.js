@@ -111,30 +111,38 @@ exports.getWallets = async (req, res) => {
     }
 };
 
-// Fetch all products categorized as "Accessories" with optional sorting
+// Fetch all products under category Accessories including filters
 exports.getAccessories = async (req, res) => {
     const category = 'Accessories';
-    const { order } = req.query;
+    const { brand, gender, maxPrice } = req.query;
     try {
-        let products;
-        if (order === 'asc') {
-            products = await Product.find({ category }).sort({ price: 1 }).populate("brand").exec();
-        } else if (order === 'desc') {
-            products = await Product.find({ category }).sort({ price: -1 }).populate("brand").exec();
-        } else {
-            products = await Product.find({ category }).populate("brand").exec();
+        // Build filter criteria
+        let filter = { category };
+        // Apply optional filters
+        if (brand) {
+            filter['brand'] = brand;
         }
-
+        if (gender) {
+            filter['gender'] = gender;
+        }
+        if (maxPrice !== undefined) {
+            filter['price'] = { $lt: parseFloat(maxPrice) + 1 };
+        }
+        // Fetch products matching the filter criteria
+        const products = await Product.find(filter).populate('brand').exec();
+        // Fetch available brands for dropdown
+        let brands = await Brand.find({}, 'name').exec();
         if (products.length === 0) {
-            return res.status(404).send('No Accessories Found');
+            return res.render('accessoriesPage', { products: [], brands, maxPrice, message: 'No Accessories Found' });
         }
-
-        res.render('accessoriesPage', { products });
+        res.render('accessoriesPage', { products, brands, maxPrice });
     } catch (err) {
         console.error('Error fetching accessories:', err);
         res.status(500).send('Server Error');
     }
 };
+
+
 // Fetch a list of products
 exports.listProducts = async (req, res) => {
     try {

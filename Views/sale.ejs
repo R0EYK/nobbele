@@ -81,7 +81,7 @@
                             <h2><%= product.name %></h2>
                             <p><%= product.description %></p>
                             <p>Original Price: <s>$<%= product.price %></s></p>
-                            <p>Discounted Price: $<%= (product.price - product.discount).toFixed(2) %></p>
+                            <p>Discounted Price: $<%= (product.price * (1 - product.discount / 100)).toFixed(2) %></p>
                             <p>Brand: <%= product.brand.name %></p>
                             <p>Gender: <%= product.gender %></p>
                             <form action="/cart/add" method="post">
