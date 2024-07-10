@@ -27,10 +27,24 @@ h1 {
 
 .cart-item {
     display: flex;
+    justify-content: space-between; /* Add this line to space items evenly */
     border-bottom: 1px solid #ccc;
     padding: 10px;
     align-items: center;
 }
+
+.remove-from-cart-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.remove-from-cart-button svg {
+    fill: rgba(154, 147, 147, 0.588); /* Change to desired color */
+}
+
 
 .cart-item img {
     max-width: 100px;
