@@ -1,28 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const Cart = require('../models/cartModel'); // נתיב נכון לקובץ
+const Cart = require('../models/cartModel');
 const Product = require('../models/productModel');
 const User = require('../models/userModel');
 
 // פונקציה להוספת מוצר לסל
 router.post('/add-to-cart', async (req, res) => {
-  const userId = req.session.userId; // קבלת מזהה המשתמש מהסשן
-  const { productId, quantity } = req.body; // קבלת מזהה המוצר וכמות מהבקשה
+  const userId = req.session.userId;
+  const { productId, quantity } = req.body;
 
   try {
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      cart = new Cart({ userId, products: [] });
+      cart = new Cart({ userId, products: [], totalPrice: 0 });
     }
 
     const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+    const product = await Product.findById(productId);
+    const productPrice = product.price * quantity;
 
     if (productIndex === -1) {
       cart.products.push({ productId, quantity });
     } else {
       cart.products[productIndex].quantity += quantity;
     }
+
+    // עדכון המחיר הכולל של העגלה
+    cart.totalPrice += productPrice;
 
     await cart.save();
     res.status(200).json({ message: 'Product added to cart successfully' });
@@ -33,19 +38,19 @@ router.post('/add-to-cart', async (req, res) => {
 
 // פונקציה להצגת סל הקניות
 router.get('/cart', async (req, res) => {
-  const userId = req.session.userId; // קבלת מזהה המשתמש מהסשן
+  const userId = req.session.userId;
 
   try {
     const cart = await Cart.findOne({ userId }).populate('products.productId');
 
     if (!cart) {
-      return res.render('cart', { products: [] }); // תצוגת עמוד הקניות עם מערך ריק אם אין מוצרים בסל
+      return res.render('cart', { products: [], totalPrice: 0 });
     }
 
-    res.render('cart', { products: cart.products }); // תצוגת עמוד הקניות עם רשימת המוצרים בסל
+    res.render('cart', { products: cart.products, totalPrice: cart.totalPrice });
   } catch (error) {
     console.error('Failed to retrieve cart', error);
-    res.status(500).send('Failed to retrieve cart'); // שגיאה במקרה של בעיה בשליפת הסל
+    res.status(500).send('Failed to retrieve cart');
   }
 });
 

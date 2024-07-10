@@ -68,3 +68,10 @@ h1 {
     font-size: 18px;
     color: #666;
 }
+
+.cart-total {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
