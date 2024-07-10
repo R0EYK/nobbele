@@ -49,6 +49,15 @@
                         <span class="status-dot not-logged-in"></span> <!-- Red dot -->
                     <% } %>
                 </a>
+                <% if (loggedIn) { %>
+                    <div class="dropdown-profile">
+                        <ul>
+                            <li><a href="/orders">Your Orders</a></li>
+                            <li><a href="/settings">Private Settings</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                <% } %>
             </div>
             <div class="cart-emoji">
                 <a href="/cart">

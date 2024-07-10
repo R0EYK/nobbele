@@ -42,6 +42,120 @@
     border-radius: 5px;
     margin-right: 10px;
 }
+/* Emoji styles */
+.emojis {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.emojis svg {
+    margin: 10px;
+    cursor: pointer;
+}
+
+.profile-emoji, .cart-emoji {
+    display: flex;
+    align-items: center;
+}
+
+.profile-emoji a, .cart-emoji a {
+    display: flex;
+    align-items: center;
+}
+
+/* Dropdown styles */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    flex-direction: column;
+    padding: 0;
+}
+
+.dropdown-content li {
+    float: none;
+}
+
+.dropdown-content li a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content li a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+/* Profile emoji dropdown */
+.dropdown-profile {
+    display: none; /* Hide dropdown by default */
+    position: absolute; /* Position it relative to the profile-emoji */
+    top: 25px; /* Adjust to place it below the profile emoji */
+    right: 0; /* Align to the right */
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1; /* Ensure it appears above other elements */
+    
+}
+
+.dropdown-profile ul {
+    list-style-type: none; /* Remove default list styling */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    display:flex;
+    flex-direction: column;
+}
+
+.dropdown-profile ul li {
+    padding: 10px 20px; /* Adjust padding for each item */
+}
+
+.dropdown-profile ul li a {
+    color: black; /* Text color */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Ensure it fills the container */
+}
+
+.dropdown-profile ul li a:hover {
+    background-color: #ddd; /* Change background on hover */
+}
+
+/* Show the dropdown when hovering over profile-emoji */
+.profile-emoji:hover .dropdown-profile {
+    display: block;
+}
+
+/* Styling for status dots */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 0px; /* Adjust as needed */
+    vertical-align: middle; /* Aligns vertically with the text */
+    position: relative; /* Enables positioning */
+    top: 3px; /* Adjust vertically as needed */
+    right:10px;
+}
+
+
+.logged-in {
+    background-color: green;
+}
+
+.not-logged-in {
+    background-color: red;
+}
+
 
 /* Banner styles */
 .banner {
@@ -156,79 +270,3 @@ a{
     background-color: #e04a17;
 }
 
-/* Emoji styles */
-.emojis {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.emojis svg {
-    margin: 10px;
-    cursor: pointer;
-}
-
-.profile-emoji, .cart-emoji {
-    display: flex;
-    align-items: center;
-}
-
-.profile-emoji a, .cart-emoji a {
-    display: flex;
-    align-items: center;
-}
-
-/* Dropdown styles */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    flex-direction: column;
-    padding: 0;
-}
-
-.dropdown-content li {
-    float: none;
-}
-
-.dropdown-content li a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-.dropdown-content li a:hover {
-    background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-
-/* Styling for status dots */
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-left: 0px; /* Adjust as needed */
-    vertical-align: middle; /* Aligns vertically with the text */
-    position: relative; /* Enables positioning */
-    top: 3px; /* Adjust vertically as needed */
-    right:10px;
-}
-
-
-.logged-in {
-    background-color: green;
-}
-
-.not-logged-in {
-    background-color: red;
-}
