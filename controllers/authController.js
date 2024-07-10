@@ -1,33 +1,35 @@
 const User = require('../models/userModel');
 const session = require('express-session');
 
-
+// Function to render our login.ejs page
 exports.getLogin = (req, res) => {
   res.render('login');
 };
-
+// Function to logout (destroy the session created for the user)
 exports.logout = (req, res) => {
   req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).send('Error logging out: ' + err.message);
-    }
-    res.redirect('/login'); // Redirect to login page after logout
+      if (err) {
+          console.log(err);
+          res.status(500).send('Logout failed');
+      } else {
+          res.redirect('/');
+      }
   });
 };
-
+// Function to post the login form and check in DB
 exports.postLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(400).send('Invalid username or password');
+      return res.status(400).send('Invalid username');
     }
 
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
-      return res.status(400).send('Invalid username or password');
+      return res.status(400).send('Invalid password');
     }
 
     // Ensure req.session is defined before setting properties

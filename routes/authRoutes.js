@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.get('/login', authController.redirectIfLoggedIn, authController.getLogin);
 router.post('/login', authController.postLogin);
-//router.get('/logout', authController.logout);
+// Logout route
+router.get('/logout', authController.logout);
 
 
 module.exports = router;
