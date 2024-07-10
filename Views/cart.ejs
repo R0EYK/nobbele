@@ -71,6 +71,13 @@
                     <div class="cart-item-info">
                         <h3><%= product.productId.name %></h3>
                         <p class="price">Price: $<%= product.productId.price %></p>
+                        <p>Quantity: 
+                            <select class="quantity-select" data-product-id="<%= product.productId._id %>">
+                                <% for (let i = 1; i <= 10; i++) { %>
+                                    <option value="<%= i %>" <%= i === product.quantity ? 'selected' : '' %>><%= i %></option>
+                                <% } %>
+                            </select>
+                        </p>
                     </div>
                     <!-- <button class="remove-from-cart-button" data-product-id="<%= product.productId._id %>">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">

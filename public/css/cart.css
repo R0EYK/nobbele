@@ -1,6 +1,13 @@
 /* cart.css */
 
 /* Overall page layout */
+.html {
+    font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-color: white;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;

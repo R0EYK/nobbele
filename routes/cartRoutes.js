@@ -6,7 +6,7 @@ const Product = require('../models/productModel');
 // פונקציה להוספת מוצר לסל
 router.post('/add-to-cart', async (req, res) => {
   const userId = req.session.userId;
-  const { productId, quantity } = req.body;
+  const { productId } = req.body;
 
   try {
     let cart = await Cart.findOne({ userId });
@@ -17,21 +17,55 @@ router.post('/add-to-cart', async (req, res) => {
 
     const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
     const product = await Product.findById(productId);
-    const productPrice = product.price * quantity;
 
     if (productIndex === -1) {
-      cart.products.push({ productId, quantity });
+      cart.products.push({ productId, quantity: 1 });
+      cart.totalPrice += product.price;
     } else {
-      cart.products[productIndex].quantity += quantity;
+      const currentQuantity = cart.products[productIndex].quantity;
+      if (currentQuantity < 10) {
+        cart.products[productIndex].quantity += 1;
+        cart.totalPrice += product.price;
+      } else {
+        return res.status(400).json({ message: 'Maximum quantity reached' });
+      }
     }
-
-    // עדכון המחיר הכולל של העגלה
-    cart.totalPrice += productPrice;
 
     await cart.save();
     res.status(200).json({ message: 'Product added to cart successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Failed to add product to cart', error });
+  }
+});
+
+// פונקציה למחיקת מוצר מהעגלה
+router.post('/remove-from-cart', async (req, res) => {
+  const userId = req.session.userId;
+  const { productId } = req.body;
+
+  try {
+    let cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+
+    const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+    if (productIndex !== -1) {
+      const product = await Product.findById(productId);
+      const productPrice = product.price;
+      const quantity = cart.products[productIndex].quantity;
+
+      cart.totalPrice -= productPrice * quantity;
+      cart.products.splice(productIndex, 1);
+
+      await cart.save();
+      return res.status(200).json({ message: 'Product removed from cart successfully' });
+    } else {
+      return res.status(404).json({ message: 'Product not found in cart' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to remove product from cart', error });
   }
 });
 
@@ -53,13 +87,13 @@ router.get('/cart', async (req, res) => {
   }
 });
 
-// פונקציה למחיקת מוצר מהסל
-router.post('/remove-from-cart', async (req, res) => {
+// פונקציה לעדכון כמות מוצר בעגלה
+router.post('/update-cart', async (req, res) => {
   const userId = req.session.userId;
-  const { productId } = req.body;
+  const { productId, quantity } = req.body;
 
   try {
-    const cart = await Cart.findOne({ userId });
+    let cart = await Cart.findOne({ userId });
 
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
@@ -67,25 +101,24 @@ router.post('/remove-from-cart', async (req, res) => {
 
     const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
 
-    if (productIndex === -1) {
+    if (productIndex !== -1) {
+      const product = await Product.findById(productId);
+      const currentQuantity = cart.products[productIndex].quantity;
+      const productPrice = product.price;
+
+      cart.totalPrice -= currentQuantity * productPrice;
+      cart.products[productIndex].quantity = quantity;
+      cart.totalPrice += quantity * productPrice;
+
+      await cart.save();
+      return res.status(200).json({ message: 'Cart updated successfully' });
+    } else {
       return res.status(404).json({ message: 'Product not found in cart' });
     }
-
-    const product = await Product.findById(productId);
-    const productPrice = product.price * cart.products[productIndex].quantity;
-
-    // הסרת המוצר מהעגלה
-    cart.products.splice(productIndex, 1);
-
-    // עדכון המחיר הכולל של העגלה
-    cart.totalPrice -= productPrice;
-
-    await cart.save();
-    res.status(200).json({ message: 'Product removed from cart successfully' });
   } catch (error) {
-    console.error('Failed to remove product from cart', error);
-    res.status(500).json({ message: 'Failed to remove product from cart', error });
+    res.status(500).json({ message: 'Failed to update cart', error });
   }
 });
+
 
 module.exports = router;
