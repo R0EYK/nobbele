@@ -1,12 +1,12 @@
+<!-- privateSettingsPage.ejs -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= product.name %> - Product Page</title>
-    <link rel="stylesheet" href="/css/product.css"> 
-    <script src="/js/product.js"></script>
-
+    <title>Private Settings</title>
+    <link rel="stylesheet" href="/css/privateSettingsPage.css">
 </head>
 <body>
     <div class="topMenu"> 
@@ -26,17 +26,7 @@
         </ul>
         <div class="emojis"> 
             <div class="search-container">
-                <svg id="searchIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                </svg>
-                <form id="searchForm" action="/products/search" method="get" style="display: none;">
-                    <input type="text" placeholder="Search products..." name="q">
-                    <button type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                        </svg>
-                    </button>
-                </form>
+                <!-- Search form -->
             </div>
             <div class="profile-emoji">
                 <a href="<%= loggedIn ? '/profile' : '/login' %>">
@@ -53,7 +43,7 @@
                     <div class="dropdown-profile">
                         <ul>
                             <li><a href="/orders">Your Orders</a></li>
-                            <li><a href="/settings">Private Settings</a></li>
+                            <li><a href="/settings">Private Settings</a></li> <!-- Link to private settings page -->
                             <li><a href="/logout">Logout</a></li>
                         </ul>
                     </div>
@@ -69,27 +59,21 @@
         </div>
     </div>
 
+    <h1 style="text-align: center; margin-top: 60px;">Private Settings</h1>
 
+    <div class="private-settings-container">
+        <h2>Account Settings</h2>
+        <!-- Form for updating account settings -->
+        
+        <h2>Password Change</h2>
+        <!-- Form for changing password -->
 
-    <div class="product-container">
-        <div class="product-image">
-            <img src="<%= product.image[0] %>" alt="<%= product.name %>">
-        </div>
-        <div class="product-details">
-            <h2><%= product.name %></h2>
-            <p><%= product.description %></p>
-            <% if (product.discount && product.discount > 0) { %>
-                <p>Original Price: <s>$<%= product.price %></s></p>
-                <p>Discounted Price: $<%= (product.price * (1 - product.discount / 100)).toFixed(2) %></p>
-                <% } else { %>
-                <p>Price: $<%= product.price %></p>
-            <% } %>            <p>Brand: <%= product.brand.name %></p>
-            <p>Gender: <%= product.gender %></p>
-            <button class="add-to-cart-button">Add to Cart</button>
-        </div>
+        <h2>Email Preferences</h2>
+        <!-- Form for managing email preferences -->
+
+        <h2>Notification Settings</h2>
+        <!-- Form for managing notification settings -->
     </div>
-
-
 
 </body>
 </html>

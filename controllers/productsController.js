@@ -63,15 +63,39 @@ exports.searchProducts = async (req, res) => {
 
 // Fetch all products categorized as "jewelry"
 exports.getJewelry = async (req, res) => {
-    const category = 'Jewelry'; // Assuming 'jewelry' is the category name
-    try {
-        const products = await Product.find({ category }).populate("brand").exec();
+    const category = 'Jewelry';
+    const { brand, gender, maxPrice } = req.query;
 
-        if (products.length === 0) {
-            return res.status(404).send('No jewelry found');
+    try {
+        // Build filter criteria
+        let filter = { category };
+
+        // Apply optional filters
+        if (brand) {
+            filter['brand'] = brand;
+        }
+        if (gender) {
+            filter['gender'] = gender;
         }
 
-        res.render('jewelryPage', { products }); // Render products on 'jewelryPage.ejs'
+        // Fetch products matching the filter criteria
+        let products = await Product.find(filter).populate('brand').exec();
+
+        // Filter products by maxPrice considering discounted prices
+        if (maxPrice !== undefined && !isNaN(parseFloat(maxPrice))) {
+            products = products.filter(product => {
+                const discountedPrice = product.discountedPrice; // Access the virtual discountedPrice
+                return discountedPrice <= parseFloat(maxPrice);
+            });
+        }
+
+        // Fetch available brands for dropdown
+        const brands = await Brand.find({}, 'name').exec();
+
+        // Render the page with products and brands
+        const message = products.length === 0 ? 'No products found' : null;
+
+        res.render('jewelryPage', { products, brands, maxPrice, brandFilter: brand, genderFilter: gender, message });
     } catch (err) {
         console.error('Error fetching jewelry:', err);
         res.status(500).send('Server Error');
@@ -80,61 +104,130 @@ exports.getJewelry = async (req, res) => {
 
 // Fetch all products categorized as "Bags"
 exports.getBags = async (req, res) => {
-    const category = 'Bags'; // Assuming 'bags' is the category name
-    try {
-        const products = await Product.find({ category }).populate("brand").exec();
+    const category = 'Bags';
+    const { brand, gender, maxPrice } = req.query;
 
-        if (products.length === 0) {
-            return res.status(404).send('No bags found');
+    try {
+        // Build filter criteria
+        let filter = { category };
+
+        // Apply optional filters
+        if (brand) {
+            filter['brand'] = brand;
+        }
+        if (gender) {
+            filter['gender'] = gender;
         }
 
-        res.render('bagsPage', { products }); // Render products on 'bagsPage.ejs'
+        // Fetch products matching the filter criteria
+        let products = await Product.find(filter).populate('brand').exec();
+
+        // Filter products by maxPrice considering discounted prices
+        if (maxPrice !== undefined && !isNaN(parseFloat(maxPrice))) {
+            products = products.filter(product => {
+                const discountedPrice = product.discountedPrice; // Access the virtual discountedPrice
+                return discountedPrice <= parseFloat(maxPrice);
+            });
+        }
+
+        // Fetch available brands for dropdown
+        const brands = await Brand.find({}, 'name').exec();
+
+        // Render the page with products and brands
+        const message = products.length === 0 ? 'No products found' : null;
+
+        res.render('bagsPage', { products, brands, maxPrice, brandFilter: brand, genderFilter: gender, message });
     } catch (err) {
         console.error('Error fetching bags:', err);
         res.status(500).send('Server Error');
     }
 };
+
 // Fetch all products categorized as "Wallets"
 exports.getWallets = async (req, res) => {
-    const category = 'Wallets'; 
-    try {
-        const products = await Product.find({ category }).populate("brand").exec();
+    const category = 'Wallets';
+    const { brand, gender, maxPrice } = req.query;
 
-        if (products.length === 0) {
-            return res.status(404).send('No wallets found');
+    try {
+        // Build filter criteria
+        let filter = { category };
+
+        // Apply optional filters
+        if (brand) {
+            filter['brand'] = brand;
+        }
+        if (gender) {
+            filter['gender'] = gender;
         }
 
-        res.render('walletsPage', { products }); // Render products on 'walletsPage.ejs'
+        // Fetch products matching the filter criteria
+        let products = await Product.find(filter).populate('brand').exec();
+
+        // Filter products by maxPrice considering discounted prices
+        if (maxPrice !== undefined && !isNaN(parseFloat(maxPrice))) {
+            products = products.filter(product => {
+                const discountedPrice = product.discountedPrice; // Access the virtual discountedPrice
+                return discountedPrice <= parseFloat(maxPrice);
+            });
+        }
+
+        // Fetch available brands for dropdown
+        const brands = await Brand.find({}, 'name').exec();
+
+        // Render the page with products and brands
+        const message = products.length === 0 ? 'No products found' : null;
+
+        res.render('walletsPage', { products, brands, maxPrice, brandFilter: brand, genderFilter: gender, message });
     } catch (err) {
         console.error('Error fetching wallets:', err);
         res.status(500).send('Server Error');
     }
 };
 
-// Fetch all products categorized as "Accessories" with optional sorting
+
 exports.getAccessories = async (req, res) => {
     const category = 'Accessories';
-    const { order } = req.query;
+    const { brand, gender, maxPrice } = req.query;
+
     try {
-        let products;
-        if (order === 'asc') {
-            products = await Product.find({ category }).sort({ price: 1 }).populate("brand").exec();
-        } else if (order === 'desc') {
-            products = await Product.find({ category }).sort({ price: -1 }).populate("brand").exec();
-        } else {
-            products = await Product.find({ category }).populate("brand").exec();
+        // Build filter criteria
+        let filter = { category };
+
+        // Apply optional filters
+        if (brand) {
+            filter['brand'] = brand;
+        }
+        if (gender) {
+            filter['gender'] = gender;
         }
 
-        if (products.length === 0) {
-            return res.status(404).send('No Accessories Found');
+        // Fetch products matching the filter criteria
+        let products = await Product.find(filter).populate('brand').exec();
+
+        // Filter products by maxPrice considering discounted prices
+        if (maxPrice !== undefined && !isNaN(parseFloat(maxPrice))) {
+            products = products.filter(product => {
+                const discountedPrice = product.discountedPrice; // Access the virtual discountedPrice
+                return discountedPrice <= parseFloat(maxPrice);
+            });
         }
 
-        res.render('accessoriesPage', { products });
+        // Fetch available brands for dropdown
+        const brands = await Brand.find({}, 'name').exec();
+
+        // Render the page with products and brands
+        const message = products.length === 0 ? 'No products found' : null;
+
+        res.render('accessoriesPage', { products, brands, maxPrice, brandFilter: brand, genderFilter: gender, message });
     } catch (err) {
         console.error('Error fetching accessories:', err);
         res.status(500).send('Server Error');
     }
 };
+
+
+
+
 // Fetch a list of products
 exports.listProducts = async (req, res) => {
     try {
