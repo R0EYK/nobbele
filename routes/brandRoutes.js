@@ -3,7 +3,6 @@
 const express = require('express');
 const router = express.Router();
 const Brand = require('../models/brandModel');
-
 // Route to fetch a list of brands
 router.get('/list', async (req, res) => {
     try {
@@ -14,5 +13,6 @@ router.get('/list', async (req, res) => {
         res.status(500).json({ error: 'Server Error' });
     }
 });
+
 
 module.exports = router;

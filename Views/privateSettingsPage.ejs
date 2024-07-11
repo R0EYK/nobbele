@@ -1,12 +1,12 @@
+<!-- privateSettingsPage.ejs -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop NOBBELE</title>
-    <link rel="stylesheet" href="/css/styles.css"> 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <script src="/js/home.js" defer></script> <!-- Ensure JavaScript is loaded after the page -->
+    <title>Private Settings</title>
+    <link rel="stylesheet" href="/css/privateSettingsPage.css">
 </head>
 <body>
     <div class="topMenu"> 
@@ -26,17 +26,7 @@
         </ul>
         <div class="emojis"> 
             <div class="search-container">
-                <svg id="searchIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                </svg>
-                <form id="searchForm" action="/products/search" method="get" style="display: none;">
-                    <input type="text" placeholder="Search products..." name="q">
-                    <button type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                        </svg>
-                    </button>
-                </form>
+                <!-- Search form -->
             </div>
             <div class="profile-emoji">
                 <a href="<%= loggedIn ? '/profile' : '/login' %>">
@@ -53,7 +43,7 @@
                     <div class="dropdown-profile">
                         <ul>
                             <li><a href="/orders">Your Orders</a></li>
-                            <li><a href="/settings">Private Settings</a></li>
+                            <li><a href="/settings">Private Settings</a></li> <!-- Link to private settings page -->
                             <li><a href="/logout">Logout</a></li>
                         </ul>
                     </div>
@@ -69,13 +59,21 @@
         </div>
     </div>
 
-    <div class="banner"> 
-        <img src="Images/SALEBANNER.png" alt="SALEBANNER">
+    <h1 style="text-align: center; margin-top: 60px;">Private Settings</h1>
+
+    <div class="private-settings-container">
+        <h2>Account Settings</h2>
+        <!-- Form for updating account settings -->
+        
+        <h2>Password Change</h2>
+        <!-- Form for changing password -->
+
+        <h2>Email Preferences</h2>
+        <!-- Form for managing email preferences -->
+
+        <h2>Notification Settings</h2>
+        <!-- Form for managing notification settings -->
     </div>
 
-    <h1>Newest In:</h1>
-    <div id="productContainer">
-        <!-- Example product link -->
-    </div>
 </body>
 </html>

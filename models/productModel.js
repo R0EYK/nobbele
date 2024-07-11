@@ -32,7 +32,14 @@ const productSchema = new mongoose.Schema({
         type: String,
         enum: ['Bags', 'Wallets', 'Accessories', 'Jewelry'], // Restrict to these values
         required: true
+    },
+    discount:{
+        type:Number,
+        default:0
     }
+});
+productSchema.virtual('discountedPrice').get(function() {
+    return this.price * (1 - this.discount / 100);
 });
 
 const Product = mongoose.model('Product', productSchema);
