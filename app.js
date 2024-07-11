@@ -7,6 +7,7 @@ const brandRoutes = require('./routes/brandRoutes');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+const Cart = require('./models/cartModel'); // Adjust the path as per your project structure
 const session = require('express-session');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -46,9 +47,28 @@ mongoose.connect('mongodb+srv://roeyk70:123ad123ad@nobbele.9nzlam0.mongodb.net/m
 // Serve static files from 'public' directory
 app.use(express.static('public'));
 // Example route rendering home.ejs
-app.get('/', (req, res) => {
-    res.render('home', { loggedIn: req.session.loggedIn }); // Pass loggedIn status to the template
-  });
+app.get('/', async (req, res) => {
+  try {
+    if (req.session.loggedIn) {
+      // If user is logged in, fetch numOfProducts from cart
+      const userId = req.session.userId;
+      const cart = await Cart.findOne({ userId });
+
+      let numOfProducts = 0;
+      if (cart) {
+        numOfProducts = cart.numOfProducts;
+      }
+
+      res.render('home', { numOfProducts, loggedIn: true });
+    } else {
+      // If user is not logged in
+      res.render('home', { loggedIn: false });
+    }
+  } catch (error) {
+    console.error('Error retrieving cart:', error);
+    res.render('home', { numOfProducts: 0, loggedIn: false });
+  }
+});
 // Serve addProduct.html , DONT FORGET TO REMOVE!!!!!
 app.get('/addProduct', (req, res) => {
     res.sendFile(path.join(__dirname, 'Views', 'addProduct.html'));

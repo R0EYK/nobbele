@@ -113,10 +113,10 @@ router.get('/cart', async (req, res) => {
     const cart = await Cart.findOne({ userId }).populate('products.productId');
 
     if (!cart) {
-      return res.render('cart', { products: [], totalPrice: 0 });
+      return res.render('cart', { products: [], totalPrice: 0, numOfProducts: 0 });
     }
 
-    res.render('cart', { products: cart.products, totalPrice: cart.totalPrice });
+    res.render('cart', { products: cart.products, totalPrice: cart.totalPrice, numOfProducts: cart.numOfProducts });
   } catch (error) {
     console.error('Failed to retrieve cart', error);
     res.status(500).send('Failed to retrieve cart');
