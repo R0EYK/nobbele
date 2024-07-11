@@ -17,15 +17,16 @@ router.post('/add-to-cart', async (req, res) => {
 
     const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
     const product = await Product.findById(productId);
+    const productPrice = product.discountedPrice; // שימוש בפונקציה discountedPrice
 
     if (productIndex === -1) {
       cart.products.push({ productId, quantity: 1 });
-      cart.totalPrice += product.price;
+      cart.totalPrice += productPrice;
     } else {
       const currentQuantity = cart.products[productIndex].quantity;
       if (currentQuantity < 10) {
         cart.products[productIndex].quantity += 1;
-        cart.totalPrice += product.price;
+        cart.totalPrice += productPrice;
       } else {
         return res.status(400).json({ message: 'Maximum quantity reached' });
       }
@@ -53,7 +54,7 @@ router.post('/remove-from-cart', async (req, res) => {
     const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
     if (productIndex !== -1) {
       const product = await Product.findById(productId);
-      const productPrice = product.price;
+      const productPrice = product.discountedPrice; // שימוש בפונקציה discountedPrice
       const quantity = cart.products[productIndex].quantity;
 
       cart.totalPrice -= productPrice * quantity;
@@ -104,7 +105,7 @@ router.post('/update-cart', async (req, res) => {
     if (productIndex !== -1) {
       const product = await Product.findById(productId);
       const currentQuantity = cart.products[productIndex].quantity;
-      const productPrice = product.price;
+      const productPrice = product.discountedPrice; // שימוש בפונקציה discountedPrice
 
       cart.totalPrice -= currentQuantity * productPrice;
       cart.products[productIndex].quantity = quantity;
@@ -119,6 +120,5 @@ router.post('/update-cart', async (req, res) => {
     res.status(500).json({ message: 'Failed to update cart', error });
   }
 });
-
 
 module.exports = router;
