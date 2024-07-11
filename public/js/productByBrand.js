@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Get product ID from URL
     const productId = window.location.pathname.split('/').pop();
+
     // Fetch product details
     fetch(`/products/${productId}`)
         .then(response => response.json())
@@ -15,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.title = `${product.name} - Product Details`; // Update page title
         })
         .catch(err => console.error('Error fetching product details:', err));
-
-        
 });
 
 //Search Icon
@@ -47,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 brands.forEach(brand => {
                     const li = document.createElement('li');
                     const a = document.createElement('a');
-                    a.href = `brand/${brand._id}`;
+                    a.href = `/products/brand/${brand._id}`;
                     a.textContent = brand.name;
                     li.appendChild(a);
                     dropdownContent.appendChild(li);
@@ -62,43 +61,4 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdown.addEventListener('mouseleave', () => {
         dropdownContent.style.display = 'none';
     });
-});
-/// Filter handling
-document.addEventListener('DOMContentLoaded', () => {
-    const applyFiltersButton = document.getElementById('applyFiltersButton');
-
-    if (applyFiltersButton) {
-        applyFiltersButton.addEventListener('click', () => {
-            const brandFilter = document.getElementById('brandFilter').value;
-            const genderFilter = document.getElementById('genderFilter').value;
-            const maxPriceFilter = document.getElementById('priceFilter').value;
-
-            let queryParams = '';
-
-            if (brandFilter) {
-                queryParams += `brand=${brandFilter}&`;
-            }
-
-            if (genderFilter) {
-                queryParams += `gender=${genderFilter}&`;
-            }
-
-            if (maxPriceFilter && !isNaN(parseFloat(maxPriceFilter))) {
-                queryParams += `maxPrice=${parseFloat(maxPriceFilter)}&`;
-            }
-
-            // Remove the trailing '&' if it exists
-            queryParams = queryParams.replace(/&$/, '');
-
-            // Determine the current category from the URL
-            const pathArray = window.location.pathname.split('/');
-            const category = pathArray[pathArray.length - 1];
-
-            // Construct URL with query parameters for the current category
-            const url = `/products/${category}?${queryParams}`;
-
-            // Redirect to the constructed URL
-            window.location.href = url;
-        });
-    }
 });

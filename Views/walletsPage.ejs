@@ -7,7 +7,6 @@
     <title>Bags</title>
     <link rel="stylesheet" href="/css/bagsStyles.css"> <!-- Link to separated CSS file -->
     <script src="../js/product.js"></script>
-
 </head>
 <body>
     <div class="topMenu"> 
@@ -18,18 +17,18 @@
             <li><a href="/products/Bags">BAGS</a></li>
             <li><a href="/products/Wallets">WALLETS</a></li>
             <li><a href="/products/Accessories">ACCESSORIES</a></li>
-            <li><a href="/products/Jewelry">JEWLERY</a></li>
-            <li><a href="/brands">BRANDS</a></li>
-            <li><a href="/sale">SALE</a></li>
+            <li><a href="/products/Jewelry">JEWELRY</a></li>
+            <li class="dropdown">
+                <a href="/brands" class="dropbtn">BRANDS</a>
+                <ul class="dropdown-content"></ul>
+            </li>
+            <li><a href="/products/sale">SALE</a></li>
         </ul>
         <div class="emojis"> 
             <div class="search-container">
-                <!-- Search icon to toggle search input -->
                 <svg id="searchIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                 </svg>
-    
-                <!-- Search input initially hidden -->
                 <form id="searchForm" action="/products/search" method="get" style="display: none;">
                     <input type="text" placeholder="Search products..." name="q">
                     <button type="submit">
@@ -39,17 +38,26 @@
                     </button>
                 </form>
             </div>
-            
-            <!-- Always show profile and cart emojis -->
             <div class="profile-emoji">
                 <a href="<%= loggedIn ? '/profile' : '/login' %>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                     </svg>
                     <% if (loggedIn) { %>
-                        Hi, <%= username %>
+                        <span class="status-dot logged-in"></span> <!-- Green dot -->
+                    <% } else { %>
+                        <span class="status-dot not-logged-in"></span> <!-- Red dot -->
                     <% } %>
                 </a>
+                <% if (loggedIn) { %>
+                    <div class="dropdown-profile">
+                        <ul>
+                            <li><a href="/orders">Your Orders</a></li>
+                            <li><a href="/settings">Private Settings</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                <% } %>
             </div>
             <div class="cart-emoji">
                 <a href="/cart">
@@ -61,24 +69,57 @@
         </div>
     </div>
 
+    <h1 style="text-align: center; margin-top: 60px;">WALLETS</h1>
+    <div class="filters">
+        <form id="filterForm" action="/products/wallets" method="get">
+            <label for="brandFilter">Brand:</label>
+            <select id="brandFilter" name="brand">
+                <option value="">All Brands</option>
+                <% brands.forEach(brand => { %>
+                    <option value="<%= brand._id %>" <%= brand._id.toString() === (brandFilter || '') ? 'selected' : '' %>><%= brand.name %></option>
+                <% }); %>
+            </select>
 
-    <h1 style="text-align: center; margin-top: 20px;">Wallets</h1>
+            <label for="genderFilter">Gender:</label>
+            <select id="genderFilter" name="gender">
+                <option value="">All</option>
+                <option value="Men" <%= genderFilter === 'Men' ? 'selected' : '' %>>Men</option>
+                <option value="Women" <%= genderFilter === 'Women' ? 'selected' : '' %>>Women</option>
+                <option value="Unisex" <%= genderFilter === 'Unisex' ? 'selected' : '' %>>Unisex</option>
+            </select>
 
+            <label for="priceFilter">Price:</label>
+            <input type="number" id="priceFilter" name="maxPrice" placeholder="Max Price" value="<%= maxPrice %>">
+
+            <button type="submit" id="applyFiltersButton">Apply Filters</button>
+        </form>
+    </div>
     <div class="productContainer">
-        <% products.forEach(product => { %>
-            <div class="product">
-                <img src="<%= product.image[0] %>" alt="<%= product.name %>">
-                <h2><%= product.name %></h2>
-                <p>Description: <%= product.description %></p>
-                <p>Price: $<%= product.price %></p>
-                <p>Brand: <%= product.brand.name %></p>
-                <p>Gender: <%= product.gender %></p>
-                <form action="/cart/add" method="post">
-                    <input type="hidden" name="productId" value="<%= product._id %>">
-                    <button type="submit" class="add-to-cart-button">Add to Cart</button>
-                </form>
-            </div>
-        <% }); %>
+        <% if (products.length === 0) { %>
+            <h2 style="text-align: center; margin-top: 20px;">No products found</h2>
+        <% } else { %>
+            <% products.forEach(product => { %>
+                <a href="/products/<%= product._id %>" class="product-link">
+                    <div class="product">
+                        <img src="<%= product.image[0] %>" alt="<%= product.name %>">
+                        <h2><%= product.name %></h2>
+                        <p><%= product.description %></p>
+                        <% if (product.discount && product.discount > 0) { %>
+                            <p>Original Price: <s>$<%= product.price.toFixed(2) %></s></p>
+                            <p>Discounted Price: $<%= (product.price * (1 - product.discount / 100)).toFixed(2) %></p>
+                        <% } else { %>
+                            <p>Price: $<%= product.price.toFixed(2) %></p>
+                        <% } %>
+                        <p>Brand: <%= product.brand.name %></p>
+                        <p>Gender: <%= product.gender %></p>
+                        <form action="/cart/add" method="post">
+                            <input type="hidden" name="productId" value="<%= product._id %>">
+                            <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                        </form>
+                    </div>
+                </a>
+            <% }); %>
+        <% } %>
     </div>
 
 </body>
