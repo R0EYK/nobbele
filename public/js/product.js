@@ -63,8 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dropdownContent.style.display = 'none';
     });
 });
-
-/// This function handles the filters
+/// Filter handling
 document.addEventListener('DOMContentLoaded', () => {
     const applyFiltersButton = document.getElementById('applyFiltersButton');
 
@@ -84,12 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 queryParams += `gender=${genderFilter}&`;
             }
 
-            if (maxPriceFilter) {
-                queryParams += `maxPrice=${maxPriceFilter}`;
+            if (maxPriceFilter && !isNaN(parseFloat(maxPriceFilter))) {
+                queryParams += `maxPrice=${parseFloat(maxPriceFilter)}&`;
             }
 
-            // Construct URL with query parameters
-            const url = `/products/accessories?${queryParams}`;
+            // Remove the trailing '&' if it exists
+            queryParams = queryParams.replace(/&$/, '');
+
+            // Determine the current category from the URL
+            const pathArray = window.location.pathname.split('/');
+            const category = pathArray[pathArray.length - 1];
+
+            // Construct URL with query parameters for the current category
+            const url = `/products/${category}?${queryParams}`;
 
             // Redirect to the constructed URL
             window.location.href = url;

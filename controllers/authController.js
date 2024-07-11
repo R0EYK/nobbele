@@ -55,3 +55,11 @@ exports.redirectIfLoggedIn = (req, res, next) => {
   }
   next();
 };
+// Check if someone is authenticated and if he isn`t it wont let him access.
+exports.isAuthenticated = (req, res, next) => {
+  if (req.session.loggedIn) {  // Assuming you use sessions for authentication
+      next();  // User is authenticated, proceed to the next middleware/route handler
+  } else {
+      res.redirect('/login');  // Redirect to login if not authenticated
+  }
+};
