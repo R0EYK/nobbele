@@ -156,26 +156,26 @@
     background-color: red;
 }
 
-.cart-quantity {
+.cart-badge {
     position: absolute;
-    top: -10px; /* ייצוב המספר שמיד אחרי */
-    right: -10px;
-    background-color: #ff4d4d;
-    color: #ffffff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(0, 0, 0, 0.619);
     font-size: 12px;
     font-weight: bold;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .cart-emoji {
     position: relative;
     display: inline-block;
-    margin-right: 20px; /* הזזת סמל */
+    margin-right: 20px; /* Adjust positioning as needed */
 }
 
 .cart-emoji a {
@@ -185,10 +185,6 @@
     text-decoration: none;
 }
 
-.cart-emoji svg {
-    width: 24px;
-    height: 24px;
-}
 
 /* Banner styles */
 .banner {
