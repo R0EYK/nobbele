@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Private Settings</title>
     <link rel="stylesheet" href="/css/privateSettingsPage.css">
-</head>
+    <script src="/js/privateSettings.js" defer></script></head>
 <body>
     <div class="topMenu"> 
         <a href="/">
@@ -26,7 +26,17 @@
         </ul>
         <div class="emojis"> 
             <div class="search-container">
-                <!-- Search form -->
+                <svg id="searchIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <form id="searchForm" action="/products/search" method="get" style="display: none;">
+                    <input type="text" placeholder="Search products..." name="q">
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+                </form>
             </div>
             <div class="profile-emoji">
                 <a href="<%= loggedIn ? '/profile' : '/login' %>">
@@ -43,7 +53,7 @@
                     <div class="dropdown-profile">
                         <ul>
                             <li><a href="/orders">Your Orders</a></li>
-                            <li><a href="/settings">Private Settings</a></li> <!-- Link to private settings page -->
+                            <li><a href="/settings">Private Settings</a></li>
                             <li><a href="/logout">Logout</a></li>
                         </ul>
                     </div>

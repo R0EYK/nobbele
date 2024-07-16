@@ -1,22 +1,97 @@
-<!-- views/login.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <link rel="stylesheet" href="/css/login.css">
+  <script src="https://kit.fontawesome.com/8e207f4b0f.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script src="/js/home.js" defer></script> 
+
 </head>
 <body>
-  <h1>Login</h1>
-  <form action="/login" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br>
+  <div class="topMenu"> 
+    <a href="/">
+        <img src="/Images/MainLogo.jpg" alt="mainLogo">
+    </a>
+    <ul>
+        <li><a href="/products/Bags">BAGS</a></li>
+        <li><a href="/products/Wallets">WALLETS</a></li>
+        <li><a href="/products/Accessories">ACCESSORIES</a></li>
+        <li><a href="/products/Jewelry">JEWELRY</a></li>
+        <li class="dropdown">
+            <a href="/brands" class="dropbtn">BRANDS</a>
+            <ul class="dropdown-content"></ul>
+        </li>
+        <li><a href="/products/sale">SALE</a></li>
+    </ul>
+    <div class="emojis"> 
+        <div class="search-container">
+            <svg id="searchIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+            <form id="searchForm" action="/products/search" method="get" style="display: none;">
+                <input type="text" placeholder="Search products..." name="q">
+                <button type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+        <div class="profile-emoji">
+            <a href="<%= loggedIn ? '/profile' : '/login' %>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+                <% if (loggedIn) { %>
+                    <span class="status-dot logged-in"></span> <!-- Green dot -->
+                <% } else { %>
+                    <span class="status-dot not-logged-in"></span> <!-- Red dot -->
+                <% } %>
+            </a>
+            <% if (loggedIn) { %>
+                <div class="dropdown-profile">
+                    <ul>
+                        <li><a href="/orders">Your Orders</a></li>
+                        <li><a href="/settings">Private Settings</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+            <% } %>
+        </div>
+        <div class="cart-emoji">
+            <a href="/cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
+  <div class="container">
+    <div class="form-box">
+      <h1>Log in</h1>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br>
+      <form action="/login" method="POST">
+          <div class="input-field">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+          </div>
 
-    <button type="submit">Login</button>
-  </form>
-  <p>No Account? <a href="/signup">Sign Up</a></p>
+          <div class="input-field">
+            <i class="fa-solid fa-key"></i>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+          </div>
+          <div class="btn-field">
+            <button type="submit">Login</button>
+          
+        </form>
+        <p class="no-account">No Account? <a href="/signup" class="sign-up-link">Sign Up</a></p>
+
+      </div>
+  </div>
+  </div>
 </body>
 </html>
