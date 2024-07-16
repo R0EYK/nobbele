@@ -194,6 +194,7 @@
     padding: 20px;
     width: 100%;
     box-sizing: border-box;
+    overflow: hidden; /* Ensures no overflow issues */
 }
 
 .banner img {
@@ -201,7 +202,14 @@
     height: auto;
     display: block;
     margin: 0 auto;
+    transition: transform 0.5s ease-in-out; /* Smooth transition for scaling */
 }
+
+.banner img:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+
 
 /* Heading styles */
 h1 {
@@ -320,10 +328,12 @@ a{
 }
 
 .gallery a {
-    width: calc(33.33% - 10px); /* Adjust width for three images per row */
+    width: calc(33.33% - 125px); /* Adjust width for three images per row */
     margin-bottom: 20px; /* Adjust spacing between rows */
     display: block;
     text-align: center; /* Center images within their container */
+    position: relative;
+    overflow: hidden;
 }
 
 .gallery img {
@@ -334,4 +344,12 @@ a{
     max-width: 300px; /* Increase maximum width by 20% */
     max-height: 300px; /* Increase maximum height by 20% */
     margin-bottom: 10px; /* Adjust spacing between images */
+    transition: transform 0.3s ease; /* Smooth scaling effect */
+    border-radius: 8px;
 }
+
+.gallery a:hover img {
+    transform: scale(1.1); /* Scale up image on hover */
+}
+
+

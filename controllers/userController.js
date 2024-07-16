@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
+const Order = require('../models/orderModel');
+
 const { registerUser, loginUser } = require('./authController');
 
 //Render Login / register pages
@@ -25,6 +27,24 @@ exports.postSignup = async (req, res) => {
 
     // Handle general errors
     res.status(500).send('Error signing up: ' + error.message);
+  }
+};
+
+exports.getUserOrders = async (req, res) => {
+  const userId = req.session.userId;
+
+  try {
+      // Fetch all orders for the current user
+      const orders = await Order.find({ userId }).sort({ orderDate: -1 }).populate("products.productId").exec();
+
+      if (orders.length === 0) {
+          return res.render('myOrders', {orders , message: 'You have no orders yet.' });
+      }
+
+      res.render('myOrders', { orders });
+  } catch (error) {
+      console.error('Error fetching orders:', error);
+      res.status(500).send('Failed to fetch orders');
   }
 };
 

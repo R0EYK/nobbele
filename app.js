@@ -79,6 +79,7 @@ app.get('/addProduct', (req, res) => {
 app.use('/products', productRoutes);
 app.use('/brands', brandRoutes); 
 app.use(userRoutes);
+app.use('/user', userRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use('/checkout', checkoutRoutes);
