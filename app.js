@@ -7,6 +7,7 @@ const brandRoutes = require('./routes/brandRoutes');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+const checkoutRoutes = require('./routes/checkoutRoutes');
 const Cart = require('./models/cartModel'); // Adjust the path as per your project structure
 const session = require('express-session');
 const app = express();
@@ -27,6 +28,7 @@ app.use(session({
 app.use((req, res, next) => {
     res.locals.loggedIn = req.session.loggedIn || false;
     res.locals.username = req.session.username || '';
+    res.locals.userId = req.session.userId || '';
     next();
   });
 
@@ -79,7 +81,7 @@ app.use('/brands', brandRoutes);
 app.use(userRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
-
+app.use('/checkout', checkoutRoutes);
 
 
 

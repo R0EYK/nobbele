@@ -1,0 +1,27 @@
+<!-- views/orderSuccess.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Success</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Thank You for Your Purchase!</h1>
+    <h2>Order Summary</h2>
+
+    <h3>Shipping Address</h3>
+    <p><%= order.shippingAddress.firstName %> <%= order.shippingAddress.lastName %></p>
+    <p><%= order.shippingAddress.street %>, <%= order.shippingAddress.houseNumber %></p>
+    <p><%= order.shippingAddress.city %>, <%= order.shippingAddress.country %> - <%= order.shippingAddress.zipCode %></p>
+
+    <h3>Products</h3>
+    <ul>
+        <% order.products.forEach(item => { %>
+            <li><%= item.productId.name %> - Quantity: <%= item.quantity %></li>
+        <% }) %>
+    </ul>
+
+    <h3>Total: $<%= order.total %></h3>
+</body>
+</html>
