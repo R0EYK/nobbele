@@ -94,6 +94,9 @@
                 <h3>Total: $<%= totalPrice %></h3>
             </div>
         <% } %>
+        <form action="/checkout" method="GET">
+            <button type="submit">Proceed to Payment</button>
+        </form>
     </div>
 
     <script src="/js/product.js"></script> 
