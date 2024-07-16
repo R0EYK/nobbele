@@ -32,6 +32,91 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.add-to-cart-button').forEach(button => {
+      button.addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
+        const quantity = this.getAttribute('data-quantity');
+  
+        fetch('/add-to-cart', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productId, quantity }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message === 'Product added to cart successfully') {
+            alert('Product added to cart successfully');
+          } else {
+            alert('Failed to add product to cart');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Failed to add product to cart');
+        });
+      });
+    });
+  });
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    // Update quantity in cart
+    document.querySelectorAll('.quantity-select').forEach(select => {
+        select.addEventListener('change', function() {
+            const productId = this.getAttribute('data-product-id');
+            const newQuantity = this.value;
+
+            fetch('/update-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId, quantity: newQuantity }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Cart updated successfully') {
+                    window.location.reload();
+                } else {
+                    alert('Failed to update cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to update cart');
+            });
+        });
+    });
+
+    // Remove item from cart
+    document.querySelectorAll('.remove-from-cart-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+
+            fetch('/remove-from-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Product removed from cart successfully') {
+                    window.location.reload();
+                } else {
+                    alert('Failed to remove product from cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to remove product from cart');
+            });
+        });
+    });
+});
 
 /// On hover the brands on nav this makes the drop down list fetch our brands and display them.
 document.addEventListener("DOMContentLoaded", () => {
