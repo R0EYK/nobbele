@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop NOBBELE</title>
-    <link rel="stylesheet" href="/css/styles.css"> 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <script src="/js/home.js" defer></script> <!-- Ensure JavaScript is loaded after the page -->
+    <title>My Orders</title>
+    <link rel="stylesheet" href="/css/myOrders.css">
+    <script src="/js/navbar.js"></script>
+
 </head>
 <body>
     <div class="topMenu"> 
@@ -61,36 +61,39 @@
             </div>
             <div class="cart-emoji">
                 <a href="/cart">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
                         <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
                     </svg>
-                  <% if (loggedIn) { %>
-                  <% if (numOfProducts > 0) { %>
-                    <span class="cart-badge"><%= numOfProducts %></span>
-                  <% } %>
-                  <% } %>
                 </a>
-              </div>
+            </div>
         </div>
     </div>
 
-    <div class="banner"> 
-    <a href="/products/sale"> <img src="Images/SALEBANNER.png" alt="SALEBANNER"></a>
-    
+    <h1>My Orders</h1>
 
-    <h1>Newest In:</h1>
-    <div id="productContainer">
-        <!-- Example product link -->
-    </div>
+    <% if (orders.length === 0) { %>
+        <p>You have no orders yet.</p>
+    <% } else { %>
+        <div class="orders-container">
+            <% orders.forEach(order => { %>
+                <div class="order">
+                    <h2>Order <%= order._id %></h2>
+                    <p><strong>Order Date:</strong> <%= order.orderDate.toDateString() %></p>
+                    <p><strong>Total Price:</strong> $<%= order.totalPrice.toFixed(2) %></p>
+                    <p><strong>Shipping Address:</strong> <%= order.shippingAddress.street %>, <%= order.shippingAddress.city %>, <%= order.shippingAddress.country %></p>
+                    <p><strong>Payment Details:</strong> ****-****-****-<%= order.paymentDetails.creditCardNumber.slice(-4) %></p>
+                    <h3>Products:</h3>
+                    <ul>
+                        <% order.products.forEach(product => { %>
+                            <li>
+                                <%= product.quantity %> x <%= product.productId.name %> <!-- Assuming 'name' is a property of Product -->
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            <% }); %>
+        </div>
+    <% } %>
 
-    <h1 class="topBrands">Our Top Brands:</h1>
-    <div class="gallery">
-        <a href=#><img src="Images/chanel.PNG"></a>
-        <a href=#><img src="Images/jacquemus.PNG"></a>
-        <a href=#><img src="Images/loewe.PNG"></a>
-        <a href="/products/brand/6686a0b0b738fc8f03ae47cf"><img src="Images/lv.PNG"></a>
-        <a href=#><img src="Images/miumiu.PNG"></a>
-        <a href=#><img src="Images/celine.PNG"></a>
-    </div>
 </body>
 </html>

@@ -6,6 +6,8 @@
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="/css/cart.css">
     <link rel="stylesheet" href="/css/styles.css"> 
+    <script src="/js/navbar.js"></script>
+
 </head>
 <body>
     <div class="topMenu"> 
@@ -93,10 +95,11 @@
             <div class="cart-total">
                 <h3>Total: $<%= totalPrice %></h3>
             </div>
+            <form action="/checkout" method="GET">
+                <button type="submit">Proceed to Payment</button>
+            </form>
         <% } %>
-        <form action="/checkout" method="GET">
-            <button type="submit">Proceed to Payment</button>
-        </form>
+        
     </div>
 
     <script src="/js/product.js"></script> 

@@ -56,6 +56,11 @@ exports.createOrder = async (req, res) => {
         });
 
         await newOrder.save();
+         // Reset the user's cart
+         cart.products = [];
+         cart.totalPrice = 0;
+         cart.numOfProducts = 0;
+         await cart.save();
         res.redirect(`/order-success/${newOrder._id}`);
     } catch (error) {
         console.error('Error saving order:', error);
