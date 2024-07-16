@@ -82,6 +82,7 @@ app.use(userRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use('/checkout', checkoutRoutes);
+app.use('/order-success' , checkoutRoutes)
 
 
 

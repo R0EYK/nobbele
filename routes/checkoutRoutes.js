@@ -10,7 +10,8 @@ router.get('/', authController.isAuthenticated, checkoutController.getCheckout);
 // POST /checkout
 router.post('/', authController.isAuthenticated , checkoutController.createOrder);
 
-router.get('/order-success/:id', authController.isAuthenticated, checkoutController.getOrderSuccess);
+// Route for order completion page.
+router.get('/:id', checkoutController.ensureOrderOwner, checkoutController.getOrderSuccess);
 
 
 module.exports = router;

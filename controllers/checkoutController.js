@@ -22,9 +22,10 @@ exports.createOrder = async (req, res) => {
     try {
         const { country, city, street, houseNumber, zipCode, creditCardNumber, expiryMonth, expiryYear, cvv, idNumber } = req.body;
         const userId = req.session.userId;
+        
 
         // Fetch the user's cart
-        const cart = await Cart.findOne({ userId: new mongoose.Types.ObjectId(userId) }).populate("userId").exec();
+        const cart = await Cart.findOne({ userId: new mongoose.Types.ObjectId(userId) }).populate("products.productId").exec();
 
         if (!cart) {
             return res.status(400).send('No cart found for user.');
@@ -33,7 +34,10 @@ exports.createOrder = async (req, res) => {
         // Create a new order
         const newOrder = new Order({
             userId: userId,
-            cart: cart._id,
+            products: cart.products.map(product => ({
+            productId: product.productId._id,
+            quantity: product.quantity,
+            })),
             totalPrice: cart.totalPrice,
             shippingAddress: {
                 country,
@@ -52,18 +56,49 @@ exports.createOrder = async (req, res) => {
         });
 
         await newOrder.save();
-        res.redirect('/order-success');
+        res.redirect(`/order-success/${newOrder._id}`);
     } catch (error) {
         console.error('Error saving order:', error);
         res.status(500).send('Internal Server Error');
     }
 };
+
+// Renders the Order Completed page
 exports.getOrderSuccess = async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id).populate('cartId').exec();
+        const orderId = req.params.id;
+        
+        // Fetch the order
+        const order = await Order.findById(orderId).populate("products.productId").exec();
+        if (!order) {
+            return res.status(404).send('Order not found.');
+        }
+        console.log(order)
+        // Render the EJS template with order data
         res.render('orderSuccess', { order });
     } catch (error) {
-        console.error('Error fetching order:', error);
+        console.error('Error fetching order details:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+exports.ensureOrderOwner = async (req, res, next) => {
+    try {
+        const orderId = req.params.id;
+        const order = await Order.findById(orderId);
+
+        if (!order) {
+            return res.status(404).send('Order not found.');
+        }
+
+        if (order.userId.toString() !== req.session.userId) {
+            return res.status(403).send('You are not authorized to view this order.');
+        }
+
+        req.order = order; // Attach order to request object for further use
+        next();
+    } catch (error) {
+        console.error('Error checking order ownership:', error);
         res.status(500).send('Internal Server Error');
     }
 };
