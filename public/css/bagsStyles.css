@@ -6,15 +6,16 @@
     background-color: white;
 }
 
-body{
-    display:flex;
-    flex-direction:column;
+body {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
 }
 
-a{
+a {
     text-decoration: none;
 }
+
 /* Top Menu Items */
 .topMenu {
     display: flex; /* Use flexbox */
@@ -50,15 +51,15 @@ a{
     height: auto; /* Maintain aspect ratio */
     border-radius: 5px; /* Rounded corners for image */
     margin-right: 10px; /* Adjust spacing between image and links */
-    top:0;
+    top: 0;
 }
 
-.emojis{
-    display:flex;
+.emojis {
+    display: flex;
     flex-direction: row;
 }
-.emojis svg{
-    margin:10px;
+.emojis svg {
+    margin: 10px;
 }
 
 /* Additional CSS for the dropdown */
@@ -67,7 +68,7 @@ a{
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     flex-direction: column; /* Ensures items are in a column */
     padding: 0; /* Removes extra padding */
@@ -92,6 +93,7 @@ a{
 .dropdown:hover .dropdown-content {
     display: block; /* Show the dropdown content on hover */
 }
+
 /* Profile emoji dropdown */
 .dropdown-profile {
     display: none; /* Hide dropdown by default */
@@ -99,16 +101,15 @@ a{
     top: 25px; /* Adjust to place it below the profile emoji */
     right: 0; /* Align to the right */
     background-color: white;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1; /* Ensure it appears above other elements */
-    
 }
 
 .dropdown-profile ul {
     list-style-type: none; /* Remove default list styling */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
@@ -131,8 +132,6 @@ a{
     display: block;
 }
 
-
-
 /* Styling for status dots */
 .status-dot {
     width: 8px;
@@ -143,9 +142,8 @@ a{
     vertical-align: middle; /* Aligns vertically with the text */
     position: relative; /* Enables positioning */
     top: -10px; /* Adjust vertically as needed */
-    right:14px;
+    right: 14px;
 }
-
 
 .logged-in {
     background-color: green;
@@ -155,26 +153,26 @@ a{
     background-color: red;
 }
 
-
 .productContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
     margin-top: 30px; /* Ensure it starts below the top menu */
-    
 }
 
 .product {
     background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin: 15px;
     padding: 20px;
     width: 300px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     box-sizing: border-box;
+    height: 500px; /* Set a fixed height for the product card */
 }
 
 .product img {
@@ -187,6 +185,7 @@ a{
 .product h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .product p {
@@ -194,8 +193,13 @@ a{
     color: #666;
     margin-bottom: 5px;
     flex-grow: 1; /* Allows description to expand and push button to bottom */
-
+    text-align: center;
+    overflow: hidden; /* Hide overflowing text */
+    display: -webkit-box; /* Needed for text truncation */
+    -webkit-box-orient: vertical; /* Needed for text truncation */
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
 }
+
 .add-to-cart-button {
     background-color: #ff7f3e; /* Tomato */
     color: white;
