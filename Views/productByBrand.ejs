@@ -143,6 +143,7 @@
             <% } %>
             <p>Brand: <%= product.brand.name %></p>
             <p>Gender: <%= product.gender %></p>
+          </a>
             <button
               class="add-to-cart-button"
               data-product-id="<%= product._id %>"
@@ -150,7 +151,7 @@
               Add to Cart
             </button>
           </div>
-        </a>
+        
         <% }); %> <% } else { %>
         <p>No products found for this brand.</p>
         <% } %>
