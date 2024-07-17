@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+/*document.addEventListener("DOMContentLoaded", () => {
   // Get product ID from URL
   const productId = window.location.pathname.split("/").pop();
 
@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Error fetching product details:", err));
 });
+*/ // Commented for now , I think we can remove it but I`m not sure.
 
 //Search Icon
 document.addEventListener("DOMContentLoaded", () => {
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 /// On hover the brands on nav this makes the drop down list fetch our brands and display them.
 document.addEventListener("DOMContentLoaded", () => {
   const dropdown = document.querySelector(".dropdown");
@@ -71,5 +73,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   dropdown.addEventListener("mouseleave", () => {
     dropdownContent.style.display = "none";
+  });
+});
+// Function which listens to the add-to-cart button
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".add-to-cart-button").forEach((button) => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default behavior
+
+      const productId = this.getAttribute("data-product-id");
+
+      fetch("/add-to-cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId }), // Send the productId
+      })
+        .then((response) => {
+          if (response.status === 401) {
+            alert("You need to Login");
+            throw new Error("Not authenticated");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.message === "Product added to cart successfully") {
+            alert("Product added to cart successfully");
+          } else {
+            alert("Failed to add product to cart");
+          }
+        })
+        .catch((error) => {
+          if (error.message !== "Not authenticated") {
+            console.error("Error:", error);
+            alert("Failed to add product to cart");
+          }
+        });
+    });
   });
 });

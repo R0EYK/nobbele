@@ -144,10 +144,8 @@
         <% } %>
         <p>Brand: <%= product.brand.name %></p>
         <p>Gender: <%= product.gender %></p>
-        <form action="/cart/add" method="post">
-          <input type="hidden" name="productId" value="<%= product._id %>" />
-          <button type="submit" class="add-to-cart-button">Add to Cart</button>
-        </form>
+        <input type="hidden" name="productId" value="<%= product._id %>" />
+        <button type="submit" class="add-to-cart-button">Add to Cart</button>
       </div>
       <% }); %> <% } %>
     </div>
