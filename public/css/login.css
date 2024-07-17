@@ -45,6 +45,7 @@
     border-bottom: 2px solid #adadad;
     padding: 10px 0px;
     position: relative;
+    
 }
 
 .input-field i{
@@ -250,3 +251,17 @@ form p a{
 .no-account .sign-up-link:hover {
     text-decoration: underline; /* Underline the link on hover */
 }
+
+.error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 5px;
+    display: none; /* Hide by default */
+  }
+
+  .input-field .error-message {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }

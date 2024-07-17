@@ -45,6 +45,8 @@
     border-bottom: 2px solid #adadad;
     padding: 10px 0px;
     position: relative;
+    display: flex;
+
 }
 
 .input-field i{
@@ -61,6 +63,7 @@
     outline: none;
     border: none;
     color: black;
+    flex: 1;
 }
 .input-field input::placeholder{
     color: #adadad;
@@ -249,4 +252,11 @@ form p a{
 
 .no-account .sign-up-link:hover {
     text-decoration: underline; /* Underline the link on hover */
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    display: none;
+      margin-left: 10px;
 }
