@@ -278,6 +278,7 @@ h1 {
 
 .add-to-cart-button {
     background-color: #ff7f3e;
+    z-index: 10; /* Ensure the button is above other elements */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -301,10 +302,12 @@ a{
 
 .add-to-cart-button:hover {
     background-color: #ff5a1f;
+    z-index: 10; /* Ensure the button is above other elements */
 }
 
 .add-to-cart-button:active {
     background-color: #e04a17;
+    z-index: 10; /* Ensure the button is above other elements */
 }
 
 /* Product container styles */
@@ -328,7 +331,8 @@ a{
 }
 
 .gallery a {
-    width: calc(33.33% - 125px); /* Adjust width for three images per row */
+    width: calc(33.33% - 30px); /* Adjust width for three images per row */
+    max-width: 400px;
     margin-bottom: 20px; /* Adjust spacing between rows */
     display: block;
     text-align: center; /* Center images within their container */
@@ -337,7 +341,7 @@ a{
 }
 
 .gallery img {
-    width: 70%; /* Increase width by 20% from 50% (1.2 times larger) */
+    width: 60%; /* Increase width by 20% from 50% (1.2 times larger) */
     height: auto; /* Maintain aspect ratio */
     display: inline-block; /* Ensure images stay inline */
     cursor: pointer;

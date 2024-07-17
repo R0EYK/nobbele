@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Cart = require('../models/cartModel');
 const session = require('express-session');
 
 // Function to render our login.ejs page
@@ -39,6 +40,9 @@ exports.postLogin = async (req, res) => {
     req.session.userId = user._id;
     req.session.username = user.username;
     req.session.loggedIn = true;
+
+    const cart = await Cart.findOne({ user: req.session.userId });
+    req.session.numOfProducts = cart ? cart.numOfProducts : 0;
 
     return res.json({ success: true });
   } catch (error) {

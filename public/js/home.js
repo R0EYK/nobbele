@@ -2,15 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/products/list')
         .then(response => response.json())
         .then(products => {
-            // Sort products by date added (assuming there's a 'createdAt' field)
-
-            // Take 5 newest  products
-            const last4Products = products.slice(-5);
+            // Take 4 newest products
+            const last4Products = products.slice(-4);
 
             const productContainer = document.getElementById('productContainer');
             last4Products.forEach(product => {
                 const productDiv = document.createElement('div');
                 productDiv.className = 'product';
+
+                const productLink = document.createElement('a');
+                productLink.href = `/products/${product._id}`; // Assuming productId is available in the product object
 
                 const productImage = document.createElement('img');
                 productImage.src = product.image[0]; // Assuming the first image URL is to be displayed
@@ -22,26 +23,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 const productPrice = document.createElement('p');
                 productPrice.textContent = `$${product.price}`;
 
+                productLink.appendChild(productImage);
+                productLink.appendChild(productName);
+                productLink.appendChild(productPrice);
+
                 // Add to Cart button
                 const addToCartButton = document.createElement('button');
                 addToCartButton.textContent = 'Add to Cart';
                 addToCartButton.className = 'add-to-cart-button';
+                addToCartButton.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent the product link from being triggered
+                    addToCart(product._id);
+                });
 
-                productDiv.appendChild(productImage);
-                productDiv.appendChild(productName);
-                productDiv.appendChild(productPrice);
+                productDiv.appendChild(productLink);
                 productDiv.appendChild(addToCartButton);
 
-                // Create link to product detail page
-                const productLink = document.createElement('a');
-                productLink.href = `/products/${product._id}`; // Assuming productId is available in the product object
-                productLink.appendChild(productDiv);
-
-                productContainer.appendChild(productLink);
+                productContainer.appendChild(productDiv);
             });
         })
         .catch(err => console.error('Error fetching products:', err));
 });
+
+function addToCart(productId) {
+    fetch('/add-to-cart', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        } else {
+            alert('Error adding product to cart');
+        }
+    })
+    .catch(err => console.error('Error adding product to cart:', err));
+}
 
 
 //Search Icon

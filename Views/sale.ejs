@@ -61,15 +61,20 @@
             </div>
             <div class="cart-emoji">
                 <a href="/cart">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
                         <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
                     </svg>
+                  <% if (loggedIn) { %>
+                  <% if (numOfProducts > 0) { %>
+                    <span class="cart-badge"><%= numOfProducts %></span>
+                  <% } %>
+                  <% } %>
                 </a>
-            </div>
+              </div>
         </div>
     </div>
 
-    <h1 style="text-align: center; margin-top: 60px;">SALE!</h1>
+    <h1 style="text-align: center; margin-top: 70px;">SALE!</h1>
 
     <div class="productContainer">
         <% if (products.length > 0) { %>
@@ -84,10 +89,7 @@
                             <p>Discounted Price: $<%= (product.price * (1 - product.discount / 100)).toFixed(2) %></p>
                             <p>Brand: <%= product.brand.name %></p>
                             <p>Gender: <%= product.gender %></p>
-                            <form action="/cart/add" method="post">
-                                <input type="hidden" name="productId" value="<%= product._id %>">
-                                <button type="submit" class="add-to-cart-button">Add to Cart</button>
-                            </form>
+                            <button class="add-to-cart-button" data-product-id="<%= product._id %>">Add to Cart</button>
                         </div>
                     </a>
                 <% } %>
