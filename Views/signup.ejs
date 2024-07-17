@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
   <link rel="stylesheet" href="/css/signup.css">
+  <script src="/js/signup.js"></script>
   <script src="https://kit.fontawesome.com/8e207f4b0f.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
 </head>
@@ -53,7 +54,7 @@
                 <div class="dropdown-profile">
                     <ul>
                         <li><a href="/orders">Your Orders</a></li>
-                        <li><a href="/settings">Private Settings</a></li>
+                        <li><a href="/changePassword">Change Password</a></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
                 </div>
@@ -68,37 +69,44 @@
         </div>
     </div>
 </div>
-  <div class="container">
-    <div class="form-box">
+<div class="container">
+  <div class="form-box">
       <h1>Sign Up</h1>
 
-      <form action="/signup" method="POST">
-        <div class="input-field">
-          <i class="fa-regular fa-user"></i>
-          <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
-        </div>
-        <div class="input-field">
-          <i class="fa-regular fa-user"></i>
-          <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
-        </div>
-        <div class="input-field">
-          <i class="fa-regular fa-user"></i>
-          <input type="text" id="username" name="username" placeholder="Username" required>
-        </div>
-        <div class="input-field">
-          <i class="fa-solid fa-key"></i>
-          <input type="password" id="password" name="password" placeholder="Password" required>
-        </div>
-        <div class="input-field">
-          <i class="fa-regular fa-envelope"></i>
-          <input type="email" id="email" name="email" placeholder="Email" required>
-        </div>
-        <div class="btn-field">
-          <button type="submit">Sign Up</button>
-        </div>
+      <form id="signupForm" action="/signup" method="POST" onsubmit="return validateForm()">
+          <div class="input-field">
+              <i class="fa-regular fa-user"></i>
+              <input type="text" id="firstName" name="firstName" placeholder="First Name">
+              <small class="error-message" id="firstNameError"></small>
+          </div>
+          <div class="input-field">
+              <i class="fa-regular fa-user"></i>
+              <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+              <small class="error-message" id="lastNameError"></small>
+          </div>
+          <div class="input-field">
+              <i class="fa-regular fa-user"></i>
+              <input type="text" id="username" name="username" placeholder="Username">
+              <small class="error-message" id="usernameError"></small>
+          </div>
+          <div class="input-field">
+              <i class="fa-solid fa-key"></i>
+              <input type="password" id="password" name="password" placeholder="Password">
+              <small class="error-message" id="passwordError"></small>
+          </div>
+          <div class="input-field">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="email" name="email" placeholder="Email">
+              <small class="error-message" id="emailError"></small>
+          </div>
+          <div class="btn-field">
+              <button type="submit">Sign Up</button>
+          </div>
       </form>
       <p class="no-account">Already have an account? <a href="/login" class="sign-up-link">Log In</a></p>
-    </div>
   </div>
+</div>
+
+
 </body>
 </html>

@@ -23,29 +23,26 @@ exports.postLogin = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(400).send('Invalid username');
+      return res.status(400).json({ username: 'Invalid username' });
     }
 
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
-      return res.status(400).send('Invalid password');
+      return res.status(400).json({ password: 'Invalid password' });
     }
 
-    // Ensure req.session is defined before setting properties
     if (!req.session) {
       throw new Error('Session not initialized');
     }
 
-    // Set session variables
     req.session.userId = user._id;
     req.session.username = user.username;
     req.session.loggedIn = true;
 
-    // Redirect to the home page
-    res.redirect('/');
+    return res.json({ success: true });
   } catch (error) {
-    res.status(500).send('Error logging in: ' + error.message);
+    res.status(500).json({ general: 'Error logging in: ' + error.message });
   }
 };
 
