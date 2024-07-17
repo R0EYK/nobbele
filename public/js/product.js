@@ -46,7 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({ productId }), // Send the productId
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 401) {
+                    alert('You need to Login');
+                    throw new Error('Not authenticated');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.message === 'Product added to cart successfully') {
                     alert('Product added to cart successfully');
@@ -55,14 +61,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('Failed to add product to cart');
+                if (error.message !== 'Not authenticated') {
+                    console.error('Error:', error);
+                    alert('Failed to add product to cart');
+                }
             });
         });
     });
 });
 
-  
+
   document.addEventListener('DOMContentLoaded', () => {
     // Update quantity in cart
     document.querySelectorAll('.quantity-select').forEach(select => {

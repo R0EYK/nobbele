@@ -5,6 +5,10 @@ const Product = require('../models/productModel');
 
 // פונקציה להוספת מוצר לסל
 router.post('/add-to-cart', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: 'You need to Login' });
+  }
+
   const userId = req.session.userId;
   const { productId } = req.body;
 
@@ -39,6 +43,7 @@ router.post('/add-to-cart', async (req, res) => {
     res.status(500).json({ message: 'Failed to add product to cart', error });
   }
 });
+
 
 // פונקציה למחיקת מוצר מהעגלה
 router.post('/remove-from-cart', async (req, res) => {

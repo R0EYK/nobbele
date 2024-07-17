@@ -85,7 +85,8 @@
                                 <p>Discounted Price: $<%= (product.price * (1 - product.discount / 100)).toFixed(2) %></p>
                                 <% } else { %>
                                 <p>Price: $<%= product.price %></p>
-                            <% } %>                            <p>Brand: <%= product.brand.name %></p>
+                            <% } %>                            
+                            <p>Brand: <%= product.brand.name %></p>
                             <p>Gender: <%= product.gender %></p>
                             <button class="add-to-cart-button" data-product-id="<%= product._id %>">Add to Cart</button>
                         </div>
