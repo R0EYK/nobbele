@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/admin-login.css" />
+    <!-- Link to your external CSS file -->
+
+    <title>Admin Login</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-box">
+        <h1>Admin Login</h1>
+        <% if (errorMessage) { %>
+        <p class="error-message"><%= errorMessage %></p>
+        <% } %>
+        <form action="/admin/login" method="POST">
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <!-- Adjust this icon class as per your design -->
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Username"
+            />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <!-- Adjust this icon class as per your design -->
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+            />
+          </div>
+          <div class="btn-field">
+            <button type="submit">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
