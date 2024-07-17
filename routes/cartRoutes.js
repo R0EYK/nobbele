@@ -38,6 +38,8 @@ router.post('/add-to-cart', async (req, res) => {
     }
 
     await cart.save();
+    req.session.numOfProducts = cart.numOfProducts; // עדכון ה-session
+
     res.status(200).json({ message: 'Product added to cart successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Failed to add product to cart', error });
@@ -68,6 +70,7 @@ router.post('/remove-from-cart', async (req, res) => {
       cart.numOfProducts -= 1; // Decrease numOfProducts
 
       await cart.save();
+      req.session.numOfProducts = cart.numOfProducts; // עדכון ה-session
       return res.status(200).json({ message: 'Product removed from cart successfully' });
     } else {
       return res.status(404).json({ message: 'Product not found in cart' });
@@ -101,6 +104,8 @@ router.post('/update-cart', async (req, res) => {
       cart.totalPrice += quantity * productPrice;
 
       await cart.save();
+      req.session.numOfProducts = cart.numOfProducts; // עדכון ה-session
+
       return res.status(200).json({ message: 'Cart updated successfully' });
     } else {
       return res.status(404).json({ message: 'Product not found in cart' });

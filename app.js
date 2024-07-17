@@ -29,6 +29,7 @@ app.use((req, res, next) => {
     res.locals.loggedIn = req.session.loggedIn || false;
     res.locals.username = req.session.username || '';
     res.locals.userId = req.session.userId || '';
+    res.locals.numOfProducts = req.session.numOfProducts || 0;
     next();
   });
 
