@@ -48,6 +48,55 @@ exports.getUserOrders = async (req, res) => {
   }
 };
 
+exports.changePasswordPage = (req, res) => {
+  res.render('changePassword' , {errorMessages:{}}); 
+};
+// userController.js
 
+exports.changePassword = async (req, res) => {
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+  const userId = req.session.userId;
 
+  try {
+      // Check if any required fields are empty
+      if (!currentPassword || !newPassword || !confirmPassword) {
+          return res.render('changePassword', {
+              errorMessages: { general: 'Please fill in all fields' }
+          });
+      }
 
+      // Check if newPassword is at least 6 characters long
+      if (newPassword.length < 6) {
+          return res.render('changePassword', {
+              errorMessages: { newPassword: 'New password must be at least 6 characters long' }
+          });
+      }
+
+      // Fetch the user from the database
+      const user = await User.findById(userId);
+
+      // Validate that newPassword and confirmPassword match
+      if (newPassword !== confirmPassword) {
+          return res.render('changePassword', {
+              errorMessages: { confirmPassword: 'Passwords do not match' }
+          });
+      }
+
+      // Validate current password
+      const isMatch = await user.comparePassword(currentPassword);
+      if (!isMatch) {
+          return res.render('changePassword', {
+              errorMessages: { currentPassword: 'Current password is incorrect' }
+          });
+      }
+
+      // Update user's password
+      user.password = newPassword;
+      await user.save();
+
+      // Redirect or render success message
+      res.redirect('/'); // Example redirect after successful password change
+  } catch (error) {
+      res.status(500).send('Error changing password: ' + error.message);
+  }
+};
