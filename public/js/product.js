@@ -34,32 +34,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.add-to-cart-button').forEach(button => {
-      button.addEventListener('click', function() {
-        const productId = this.getAttribute('data-product-id');
-        const quantity = this.getAttribute('data-quantity');
-  
-        fetch('/add-to-cart', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ productId, quantity }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.message === 'Product added to cart successfully') {
-            alert('Product added to cart successfully');
-          } else {
-            alert('Failed to add product to cart');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Failed to add product to cart');
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior
+
+            const productId = this.getAttribute('data-product-id');
+
+            fetch('/add-to-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId }), // Send the productId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Product added to cart successfully') {
+                    alert('Product added to cart successfully');
+                } else {
+                    alert('Failed to add product to cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add product to cart');
+            });
         });
-      });
     });
-  });
+});
+
   
   document.addEventListener('DOMContentLoaded', () => {
     // Update quantity in cart

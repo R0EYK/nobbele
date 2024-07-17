@@ -202,6 +202,7 @@ a {
 
 .add-to-cart-button {
     background-color: #ff7f3e; /* Tomato */
+    z-index: 10; /* Ensure the button is above other elements */
     color: white;
     border: none;
     padding: 10px 20px;

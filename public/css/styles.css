@@ -278,6 +278,7 @@ h1 {
 
 .add-to-cart-button {
     background-color: #ff7f3e;
+    z-index: 10; /* Ensure the button is above other elements */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -301,10 +302,12 @@ a{
 
 .add-to-cart-button:hover {
     background-color: #ff5a1f;
+    z-index: 10; /* Ensure the button is above other elements */
 }
 
 .add-to-cart-button:active {
     background-color: #e04a17;
+    z-index: 10; /* Ensure the button is above other elements */
 }
 
 /* Product container styles */
