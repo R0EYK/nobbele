@@ -331,7 +331,8 @@ a{
 }
 
 .gallery a {
-    width: calc(33.33% - 125px); /* Adjust width for three images per row */
+    width: calc(33.33% - 30px); /* Adjust width for three images per row */
+    max-width: 400px;
     margin-bottom: 20px; /* Adjust spacing between rows */
     display: block;
     text-align: center; /* Center images within their container */
@@ -340,7 +341,7 @@ a{
 }
 
 .gallery img {
-    width: 70%; /* Increase width by 20% from 50% (1.2 times larger) */
+    width: 60%; /* Increase width by 20% from 50% (1.2 times larger) */
     height: auto; /* Maintain aspect ratio */
     display: inline-block; /* Ensure images stay inline */
     cursor: pointer;
