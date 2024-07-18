@@ -53,4 +53,11 @@ router.get(
   adminController.getProductsByCategory
 );
 
+// Route to get orders locations
+router.get(
+  "/orders-locations",
+  adminController.isAuthenticatedAdmin,
+  adminController.getOrdersLocations
+);
+
 module.exports = router;

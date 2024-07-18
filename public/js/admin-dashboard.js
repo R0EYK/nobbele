@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize the map
+  initMap();
+
   // Fetch and create the City Orders Chart
   fetch("/admin/orders-by-city")
     .then((response) => response.json())
@@ -21,6 +24,64 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching product counts by category data:", error)
     );
 });
+
+function initMap() {
+  // Initialize the Google Map
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 0, lng: 0 }, // Default center
+    zoom: 2,
+  });
+
+  // Initialize the Geocoder
+  const geocoder = new google.maps.Geocoder();
+  let mapBounds;
+
+  // Fetch addresses and place markers on the map
+  fetch("/admin/orders-locations")
+    .then((response) => response.json())
+    .then((addresses) => geocodeAddresses(addresses, geocoder, map, mapBounds))
+    .catch((error) => console.error("Error fetching addresses:", error));
+}
+
+function geocodeAddresses(addresses, geocoder, map, mapBounds) {
+  // Initialize mapBounds if it doesn't exist
+  if (!mapBounds) {
+    mapBounds = new google.maps.LatLngBounds();
+  }
+
+  addresses.forEach((address) => {
+    // Check if all required fields exist in the current address object
+    if (address.street && address.city && address.country && address.zipCode) {
+      const fullAddress = `${address.street}, ${address.city}, ${address.country}, ${address.zipCode}`;
+      console.log("Geocoding address:", fullAddress); // Log address being geocoded
+
+      geocoder.geocode({ address: fullAddress }, (results, status) => {
+        console.log("Geocoding results:", results); // Log geocoding results
+        console.log("Geocoding status:", status); // Log geocoding status
+
+        if (status === "OK") {
+          const location = results[0].geometry.location;
+          new google.maps.Marker({
+            position: location,
+            map: map,
+            title: fullAddress,
+          });
+
+          // Adjust map bounds to include all markers
+          mapBounds.extend(location);
+          map.fitBounds(mapBounds);
+        } else {
+          console.error(
+            "Geocode was not successful for the following reason:",
+            status
+          );
+        }
+      });
+    } else {
+      console.error("Address data is incomplete:", address);
+    }
+  });
+}
 
 function createCityOrdersChart(data) {
   // Set dimensions and margins

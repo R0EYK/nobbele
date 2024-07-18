@@ -145,3 +145,34 @@ exports.getProductsByCategory = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+exports.getOrdersLocations = async (req, res) => {
+  try {
+    const orders = await Order.aggregate([
+      {
+        $match: {
+          "shippingAddress.city": { $exists: true },
+          "shippingAddress.country": { $exists: true },
+          "shippingAddress.street": { $exists: true },
+          "shippingAddress.houseNumber": { $exists: true },
+          "shippingAddress.zipCode": { $exists: true },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          city: "$shippingAddress.city",
+          country: "$shippingAddress.country",
+          street: "$shippingAddress.street",
+          houseNumber: "$shippingAddress.houseNumber",
+          zipCode: "$shippingAddress.zipCode",
+        },
+      },
+    ]);
+
+    res.json(orders);
+  } catch (error) {
+    console.error("Error fetching orders locations:", error);
+    res.status(500).send("Server Error");
+  }
+};

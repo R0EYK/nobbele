@@ -1,101 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <h1>Add New Product</h1>
-    <form id="productForm">
-        <!-- Remove productId field if ObjectId is auto-generated -->
-
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" required><br>
-
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description" required><br>
-
-        <label for="image">Image URLs (comma separated):</label>
-        <input type="text" id="image" name="image" required><br>
-
-        <label for="brand">Brand:</label>
-        <select id="brand" name="brand" required>
-            <!-- Options will be dynamically populated -->
-        </select><br>
-
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender" required>
-            <option value="Men">Men</option>
-            <option value="Women">Women</option>
-            <option value="Unisex">Unisex</option>
-        </select><br>
-
-        <label for="category">Category:</label>
-        <select id="category" name="category" required>
-            <option value="Bags">Bags</option>
-            <option value="Wallets">Wallets</option>
-            <option value="Accessories">Accessories</option>
-            <option value="JEWELRY">JEWELRY</option>
-        </select><br>
-
-        <button type="submit">Add Product</button>
-    </form>
-    <p id="message"></p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Map Example</title>
+    <style>
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnkAsOymo2dPG6n6Rrn2psusY53S2Nxm4&callback=initMap"
+      async
+      defer
+    ></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const response = await fetch('/brands/list');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch brands');
-                }
-                const brands = await response.json();
-                const brandSelect = document.getElementById('brand');
+      function initMap() {
+        // Map options
+        const mapOptions = {
+          zoom: 10,
+          center: { lat: 37.7749, lng: -122.4194 }, // Default to San Francisco
+          mapTypeId: "roadmap",
+        };
 
-                brands.forEach(brand => {
-                    const option = document.createElement('option');
-                    option.value = brand._id; // Assuming _id is ObjectId
-                    option.textContent = brand.name; // Assuming 'name' is the brand name
-                    brandSelect.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error fetching brands:', error);
-            }
+        // Create the map
+        const map = new google.maps.Map(
+          document.getElementById("map"),
+          mapOptions
+        );
+
+        // Example marker
+        const marker = new google.maps.Marker({
+          position: { lat: 37.7749, lng: -122.4194 },
+          map: map,
+          title: "San Francisco",
         });
-
-        document.getElementById('productForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData.entries());
-
-            try {
-                const response = await fetch('/products/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                const messageElement = document.getElementById('message');
-
-                if (response.ok) {
-                    messageElement.textContent = 'Product added successfully!';
-                    messageElement.style.color = 'green';
-                } else {
-                    const error = await response.text();
-                    messageElement.textContent = `Error: ${error}`;
-                    messageElement.style.color = 'red';
-                }
-            } catch (err) {
-                console.error('Error:', err);
-            }
-        });
+      }
     </script>
-</body>
+  </body>
 </html>
