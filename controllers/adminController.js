@@ -2,6 +2,9 @@ const bcrypt = require("bcryptjs");
 const Admin = require("../models/adminModel");
 const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
+const Brand = require('../models/brandModel');
+const User = require('../models/userModel');
+
 
 exports.renderLogin = (req, res) => {
   res.render("admin-login", { errorMessage: null });
@@ -174,5 +177,116 @@ exports.getOrdersLocations = async (req, res) => {
   } catch (error) {
     console.error("Error fetching orders locations:", error);
     res.status(500).send("Server Error");
+  }
+};
+
+exports.getManageProductsPage = async (req, res) => {
+  try {
+      const products = await Product.find().populate("brand").exec();
+      res.render('manage-products', { products });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+exports.deleteProduct = async (req, res) => {
+  try {
+      await Product.findByIdAndDelete(req.params.id);
+      res.json({ success: true });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false });
+  }
+};
+exports.getEditProduct = async (req, res) => {
+  try {
+      const product = await Product.findById(req.params.id).populate('brand');
+      res.render('edit-product', { product });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+
+// Handle edit product form submission
+exports.postEditProduct = async (req, res) => {
+  try {
+      const { name, price, description, image, brand, gender, category, discount } = req.body;
+      await Product.findByIdAndUpdate(req.params.id, {
+          name,
+          price,
+          description,
+          image: image.split(',').map(img => img.trim()), // Convert comma-separated string to array
+          brand,
+          gender,
+          category,
+          discount: discount || 0
+      });
+      res.redirect('/admin/manage-products');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+// Get manage users page
+exports.getManageUsers = async (req, res) => {
+  try {
+      // Fetch all users excluding password field
+      const users = await User.find({}, '-password');
+      res.render('admin-manage-users', { users });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+// Get manage brands page
+exports.getManageBrands = async (req, res) => {
+  try {
+      const brands = await Brand.find();
+      res.render('admin-manage-brands', { brands });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+// Get edit brand page
+exports.getEditBrand = async (req, res) => {
+  try {
+      const brand = await Brand.findById(req.params.id);
+      if (!brand) {
+          return res.status(404).send('Brand not found');
+      }
+      res.render('edit-brand', { brand });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+// Post updated brand information
+exports.postEditBrand = async (req, res) => {
+  try {
+      const { name } = req.body;
+      await Brand.findByIdAndUpdate(req.params.id, { name });
+      res.redirect('/admin/manage-brands');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+// Delete brand
+exports.deleteBrand = async (req, res) => {
+  try {
+      await Brand.findByIdAndDelete(req.params.id);
+      res.redirect('/admin/manage-brands');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
   }
 };

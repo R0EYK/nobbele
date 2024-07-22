@@ -149,8 +149,12 @@
         <p>Brand: <%= product.brand.name %></p>
         <p>Gender: <%= product.gender %></p>
         <input type="hidden" name="productId" value="<%= product._id %>" />
-        <button type="submit" class="add-to-cart-button">Add to Cart</button>
-      </div>
+        <button
+        class="add-to-cart-button"
+        data-product-id="<%= product._id %>"
+      >
+        Add to Cart
+      </button>      </div>
       <% }); %> <% } %>
     </div>
   </body>
