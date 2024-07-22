@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productsController = require('../controllers/productsController');
+const adminController = require('../controllers/adminController');
 
 
 // Route to handle product search
@@ -20,6 +21,7 @@ router.get('/Jewelry', productsController.getJewelry);
 
 // Route to fetch a list of products
 router.get('/list', productsController.listProducts);
+
 // Route to fetch a list of products by brand id
 
 router.get('/brand/:brandId', productsController.getProductsByBrand);

@@ -26,14 +26,6 @@ router.get(
   adminController.getDashboard
 );
 
-// Manage Orders route
-router.get("/manage-orders", adminController.getManageOrders);
-
-// Manage Brands route
-router.get("/manage-brands", adminController.getManageBrands);
-
-// Manage Users route
-router.get("/manage-users", adminController.getManageUsers);
 
 router.get(
   "/orders-by-city",
@@ -59,5 +51,17 @@ router.get(
   adminController.isAuthenticatedAdmin,
   adminController.getOrdersLocations
 );
+router.get('/manage-users', adminController.isAuthenticatedAdmin , adminController.getManageUsers);
+router.get('/manage-products', adminController.isAuthenticatedAdmin , adminController.getManageProductsPage);
+router.delete('/delete-product/:id', adminController.isAuthenticatedAdmin , adminController.deleteProduct);
+router.get('/edit-product/:id', adminController.isAuthenticatedAdmin , adminController.getEditProduct);
+router.post('/edit-product/:id', adminController.isAuthenticatedAdmin , adminController.postEditProduct);
+// Edit brand routes
+router.get('/edit-brand/:id', adminController.isAuthenticatedAdmin , adminController.getEditBrand);
+router.post('/edit-brand/:id', adminController.isAuthenticatedAdmin , adminController.postEditBrand);
+// Manage brands route
+router.get('/manage-brands',adminController.isAuthenticatedAdmin , adminController.getManageBrands);
+// Delete brand route
+router.get('/delete-brand/:id',adminController.isAuthenticatedAdmin , adminController.deleteBrand);
 
 module.exports = router;
