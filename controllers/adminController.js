@@ -290,3 +290,72 @@ exports.deleteBrand = async (req, res) => {
       res.status(500).send('Server Error');
   }
 };
+
+exports.renderAddProductPage = async (req, res) => {
+  try {
+      const brands = await Brand.find();
+      res.render('add-product', { brands });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+
+exports.addProduct = async (req, res) => {
+  try {
+      const { name, price, description, brand, gender, category, discount, image } = req.body;
+      const images = image.split(',').map(img => img.trim());
+
+      const newProduct = new Product({
+          name,
+          price,
+          description,
+          image: images,
+          brand,
+          gender,
+          category,
+          discount
+      });
+
+      await newProduct.save();
+      res.redirect('/admin/manage-products');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+exports.renderAddBrandPage = (req, res) => {
+  res.render('add-brand');
+};
+
+exports.addBrand = async (req, res) => {
+  try {
+      const { name } = req.body;
+
+      // Check if the brand already exists
+      const existingBrand = await Brand.findOne({ name });
+      if (existingBrand) {
+          return res.status(400).send('Brand already exists');
+      }
+
+      const newBrand = new Brand({ name });
+      await newBrand.save();
+      res.redirect('/admin/manage-brands');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+exports.renderManageOrdersPage = async (req, res) => {
+  try {
+      const orders = await Order.find()
+          .populate('userId') // Populate userId field with User documents
+          .populate('products.productId'); // Populate productId field with Product documents
+
+      res.render('manage-orders', { orders });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};

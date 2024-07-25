@@ -456,3 +456,14 @@ form p a {
   top: 50%;
   transform: translateY(-50%);
 }
+
+/* Disable pointer events for the profile emoji when logged in */
+.profile-emoji.disabled a {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Show the dropdown profile if logged in */
+.profile-emoji:not(.disabled) .dropdown-profile {
+  display: block;
+}

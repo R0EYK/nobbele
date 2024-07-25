@@ -38,36 +38,44 @@ body {
     text-decoration: none;
   }
 
+
+/* Basic styles for the manage-orders page */
+.page-content {
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
 }
-th, td {
-    border: 1px solid black;
+
+table th, table td {
+    border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
-th {
-    background-color: #f2f2f2;
-}
-.action-icons {
-    cursor: pointer;
-}
 
-.add-product-container {
-  text-align: center;
-  margin-bottom: 20px; /* Adjust the spacing as needed */
-  text-align: end;
+table th {
+    background-color: #f4f4f4;
+    font-weight: 500;
 }
 
-.add-product-link {
-  font-size: 2rem; /* Adjust the size as needed */
-  text-decoration: none;
-  color: black; /* Adjust the color as needed */
-  display: inline-block; /* Make the link only as wide as the content */
-
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-.add-product-link:hover {
-  color: blue; /* Adjust the hover color as needed */
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table img {
+    max-width: 100px;
+    height: auto;
 }
