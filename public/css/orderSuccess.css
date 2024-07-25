@@ -9,6 +9,7 @@
 .topMenu {
   display: flex;
   align-items: center;
+  top:0;
   justify-content: space-between;
   padding: 10px;
   position: fixed;
