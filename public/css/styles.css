@@ -10,6 +10,7 @@
 /* Top menu styles */
 .topMenu {
   display: flex;
+  top:0;
   align-items: center;
   justify-content: space-between;
   padding: 10px;
@@ -507,7 +508,7 @@ a {
 .footer {
   background-color: #f8f9fa; /* Light grey background color */
   padding: 20px;
-  margin-top: 3cm; /* Space at the bottom */
+  margin-top: 1cm; /* Space at the bottom */
   border-top: 1px solid #ddd; /* Optional border at the top */
 }
 
@@ -521,25 +522,44 @@ a {
   width: 30%;
 }
 
-.footer-section.left {
-  text-align: left;
+.footer-section.left,
+.footer-section.right {
+  text-align: center;
 }
 
 .footer-section.center {
   text-align: center;
-}
 
-.footer-section.right {
-  text-align: right;
 }
-
+.footer-section.center p{
+  line-height: 1.6; 
+}
 .footer-info h3 {
   margin-bottom: 10px;
   font-size: 18px;
+  text-align: center; /* Center align the headings */
 }
 
 .footer-info p {
   margin: 5px 0;
+  line-height: 1.6; 
+}
+
+.right .contact-box {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd; /* Border around the contact boxes */
+  border-radius: 5px; /* Rounded corners */
+  margin-bottom: 10px; /* Space between the contact boxes */
+}
+
+.right .contact-box i {
+  margin-right: 10px; /* Space between icon and text */
+}
+
+.right p {
+  margin: 0; /* Remove default margin from paragraphs */
 }
 
 .right i {

@@ -1,4 +1,4 @@
-/*document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Get product ID from URL
   const productId = window.location.pathname.split("/").pop();
 
@@ -18,7 +18,7 @@
     })
     .catch((err) => console.error("Error fetching product details:", err));
 });
-*/ // Commented for now , I think we can remove it but I`m not sure.
+ // Commented for now , I think we can remove it but I`m not sure.
 
 //Search Icon
 document.addEventListener("DOMContentLoaded", () => {
