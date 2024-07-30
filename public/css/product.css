@@ -337,6 +337,18 @@
   border-color: transparent;
 }
 
+/* Disable pointer events for the profile emoji when logged in */
+.profile-emoji.disabled a {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Show the dropdown profile if logged in */
+.profile-emoji:not(.disabled) .dropdown-profile {
+  display: block;
+}
+
+
 /* End of Menu styling! */
 
 .product-container {
@@ -350,6 +362,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow */
   position: relative;
   top: 100px;
+  margin-bottom: 140px;
 }
 
 .product-image {

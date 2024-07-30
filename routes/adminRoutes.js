@@ -63,5 +63,13 @@ router.post('/edit-brand/:id', adminController.isAuthenticatedAdmin , adminContr
 router.get('/manage-brands',adminController.isAuthenticatedAdmin , adminController.getManageBrands);
 // Delete brand route
 router.get('/delete-brand/:id',adminController.isAuthenticatedAdmin , adminController.deleteBrand);
-
+// Route to render add-product page
+router.get('/add-product', adminController.isAuthenticatedAdmin, adminController.renderAddProductPage);
+// Route to handle add-product form submission
+router.post('/add-product', adminController.isAuthenticatedAdmin,  adminController.addProduct);
+// Routes for brands
+router.get('/add-brand',adminController.isAuthenticatedAdmin, adminController.renderAddBrandPage);
+router.post('/add-brand',adminController.isAuthenticatedAdmin, adminController.addBrand);
+// Route for managing orders
+router.get('/manage-orders',adminController.isAuthenticatedAdmin,adminController.renderManageOrdersPage);
 module.exports = router;

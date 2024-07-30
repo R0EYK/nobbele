@@ -4,6 +4,34 @@ const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
 const Brand = require('../models/brandModel');
 const User = require('../models/userModel');
+const axios = require('axios');
+
+// Function to post to Facebook
+const postToFacebook = async (product) => {
+  const pageAccessToken = 'EAALh1BrnmxQBOZCSLosgEcZCZA4BF3W27O2BncCn3rGZCL84E5MqRhoMVKZBEv48dZA0UonMZC2yINC9VxIq9cXxoeIiVGpiS77d5IJW9zFvdU5KtvAyiHqMQTy7KocjlO42kip1ctkPsOwT72cZC87g5c0UESd71eHn51WKcpeZCsr2ZBE9R3dV0CJSpmkuZAvCBH2Avd9xaxZBoZBJUin9QN9tcvMoO'
+  const pageId = '370033476196420'; // Replace with your page ID
+
+  const message = `
+    New Product: ${product.name}
+    Brand: ${product.brand}
+    Price: $${product.price}
+    picture: ${product.image}
+    Description: ${product.description}
+  `;
+
+  try {
+    const response = await axios.post(`https://graph.facebook.com/${pageId}/feed`, {
+      message: message,
+      access_token: pageAccessToken
+    });
+    console.log('Successfully posted to Facebook:', response.data.id);
+  } catch (error) {
+    console.error('Error posting to Facebook:', error.response ? error.response.data : error.message);
+  }
+};
+
+
+
 
 
 exports.renderLogin = (req, res) => {
@@ -285,6 +313,80 @@ exports.deleteBrand = async (req, res) => {
   try {
       await Brand.findByIdAndDelete(req.params.id);
       res.redirect('/admin/manage-brands');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+exports.renderAddProductPage = async (req, res) => {
+  try {
+      const brands = await Brand.find();
+      res.render('add-product', { brands });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+
+
+exports.addProduct = async (req, res) => {
+  try {
+    const { name, price, description, brand, gender, category, discount, image } = req.body;
+    const images = image.split(',').map(img => img.trim());
+
+    const newProduct = new Product({
+      name,
+      price,
+      description,
+      image: images,
+      brand,
+      gender,
+      category,
+      discount
+    });
+
+    // Save the product to the database
+    await newProduct.save();
+
+    // Post to Facebook
+    await postToFacebook(newProduct);
+
+    res.redirect('/admin/manage-products');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+exports.renderAddBrandPage = (req, res) => {
+  res.render('add-brand');
+};
+
+exports.addBrand = async (req, res) => {
+  try {
+      const { name } = req.body;
+
+      // Check if the brand already exists
+      const existingBrand = await Brand.findOne({ name });
+      if (existingBrand) {
+          return res.status(400).send('Brand already exists');
+      }
+
+      const newBrand = new Brand({ name });
+      await newBrand.save();
+      res.redirect('/admin/manage-brands');
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+};
+exports.renderManageOrdersPage = async (req, res) => {
+  try {
+      const orders = await Order.find()
+          .populate('userId') // Populate userId field with User documents
+          .populate('products.productId'); // Populate productId field with Product documents
+
+      res.render('manage-orders', { orders });
   } catch (err) {
       console.error(err);
       res.status(500).send('Server Error');

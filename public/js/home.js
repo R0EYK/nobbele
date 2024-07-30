@@ -41,6 +41,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         productContainer.appendChild(productDiv);
       });
+      // Define loggedIn here
+    const loggedIn = JSON.stringify(loggedIn); // Assuming this is how you're injecting server-side data into JS
+
+    // Handle profile link click
+    const profileLink = document.getElementById('profile-link');
+    
+    if (loggedIn) {
+        profileLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const dropdown = document.querySelector('.dropdown-profile');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+    }
     })
     .catch((err) => console.error("Error fetching products:", err));
 });
@@ -118,3 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdownContent.style.display = "none";
   });
 });
+
+
+// Profile dropdown list handler

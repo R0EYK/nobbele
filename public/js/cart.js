@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchIcon = document.getElementById("searchIcon");
   const searchForm = document.getElementById("searchForm");
   const searchInput = document.getElementById("searchInput");
-
+ 
   searchIcon.addEventListener("click", () => {
     if (
       searchForm.style.display === "none" ||
@@ -22,14 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
+ 
 document.addEventListener("DOMContentLoaded", () => {
   // Update quantity in cart
   document.querySelectorAll(".quantity-select").forEach((select) => {
     select.addEventListener("change", function () {
       const productId = this.getAttribute("data-product-id");
       const newQuantity = this.value;
-
+ 
       fetch("/update-cart", {
         method: "POST",
         headers: {
@@ -51,12 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
   });
-
+ 
   // Remove item from cart
   document.querySelectorAll(".remove-from-cart-button").forEach((button) => {
     button.addEventListener("click", function () {
       const productId = this.getAttribute("data-product-id");
-
+ 
       fetch("/remove-from-cart", {
         method: "POST",
         headers: {
@@ -79,18 +79,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-
+ 
 /// On hover the brands on nav this makes the drop down list fetch our brands and display them.
 document.addEventListener("DOMContentLoaded", () => {
   const dropdown = document.querySelector(".dropdown");
   const dropdownContent = document.querySelector(".dropdown-content");
-
+ 
   dropdown.addEventListener("mouseover", async () => {
     if (dropdownContent.children.length === 0) {
       try {
         const response = await fetch("/brands/list");
         const brands = await response.json();
-
+ 
         brands.forEach((brand) => {
           const li = document.createElement("li");
           const a = document.createElement("a");
@@ -105,22 +105,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     dropdownContent.style.display = "block";
   });
-
+ 
   dropdown.addEventListener("mouseleave", () => {
     dropdownContent.style.display = "none";
   });
 });
-
+ 
 document.addEventListener('DOMContentLoaded', () => {
   updateTotalPrice(); // עדכון המחיר לפי שער ההמרה שנבחר בדיפולט (USD)
 });
-
+ 
 function convertCurrency(totalPrice, exchangeRates) {
 const currency = document.getElementById('currency-select').value;
 const rate = exchangeRates[currency];
 return totalPrice * rate;
 }
-
+ 
 function updateTotalPrice() {
 const totalPriceElement = document.getElementById('total-price');
 const baseTotalPrice = parseFloat(totalPriceElement.dataset.baseTotal);
