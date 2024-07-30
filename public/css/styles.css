@@ -200,9 +200,19 @@
   padding: 10px 0; /* Padding for better appearance */
 }
 
+.profile-emoji.disabled svg {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.profile-emoji .dropdown-profile {
+  display: none;
+  z-index:10;
+}
+
 /* Show the dropdown when hovering over profile-emoji */
 .profile-emoji:hover .dropdown-profile {
-  display: flex;
+  display: block;
   opacity: 1;
   transform: translateY(0);
   flex-direction: column;
@@ -337,6 +347,17 @@
 .search-container button {
   background-color: transparent;
   border-color: transparent;
+}
+
+/* Disable pointer events for the profile emoji when logged in */
+.profile-emoji.disabled a {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Show the dropdown profile if logged in */
+.profile-emoji:not(.disabled) .dropdown-profile {
+  display: block;
 }
 
 /* End of Menu styling! */
