@@ -77,6 +77,20 @@
     </div>
     <div id="cartTitle"><h1>Your Shopping Cart</h1></div>
 
+    <% if (loggedIn) { %>
+    
+        <div>
+            <label for="currency-select">Choose a currency:</label>
+            <select id="currency-select" onchange="updateTotalPrice()">
+                <option value="USD" selected>USD</option>
+                <option value="ILS">ILS</option>
+                <option value="EUR">EUR</option>
+            </select>
+        </div>
+        
+        <h2>Total Price: <span id="total-price" data-base-total="<%= totalPrice %>" data-exchange-rates='<%= JSON.stringify(exchangeRates) %>'></span></h2>
+        
+        <% } %>
     <div class="cart-container">
         <% if (products.length === 0) { %>
             <p class="empty-cart">Your cart is empty</p>

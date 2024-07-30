@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Cart = require('../models/cartModel');
 const Product = require('../models/productModel');
+const axios = require('axios');
 
 // פונקציה להוספת מוצר לסל
 router.post('/add-to-cart', async (req, res) => {
@@ -45,7 +46,6 @@ router.post('/add-to-cart', async (req, res) => {
     res.status(500).json({ message: 'Failed to add product to cart', error });
   }
 });
-
 
 // פונקציה למחיקת מוצר מהעגלה
 router.post('/remove-from-cart', async (req, res) => {
@@ -115,6 +115,21 @@ router.post('/update-cart', async (req, res) => {
   }
 });
 
+// פונקציה לקבלת שערי חליפין
+async function getExchangeRates() {
+  const apiKey = 'd6d48c80e3efba0725d5a7df';
+  const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
+
+  try {
+    const response = await axios.get(url);
+    const rates = response.data.conversion_rates;
+    return rates;
+  } catch (error) {
+    console.error('Failed to fetch exchange rates:', error);
+    throw new Error('Failed to fetch exchange rates');
+  }
+}
+
 // פונקציה להצגת סל הקניות
 router.get('/cart', async (req, res) => {
   const userId = req.session.userId;
@@ -123,46 +138,20 @@ router.get('/cart', async (req, res) => {
     const cart = await Cart.findOne({ userId }).populate('products.productId');
 
     if (!cart) {
-      return res.render('cart', { products: [], totalPrice: 0, numOfProducts: 0 });
+      return res.render('cart', { products: [], totalPrice: 0, numOfProducts: 0, exchangeRates: null });
     }
 
-    res.render('cart', { products: cart.products, totalPrice: cart.totalPrice, numOfProducts: cart.numOfProducts });
+    const exchangeRates = await getExchangeRates();
+
+    res.render('cart', {
+      products: cart.products,
+      totalPrice: cart.totalPrice,
+      numOfProducts: cart.numOfProducts,
+      exchangeRates
+    });
   } catch (error) {
     console.error('Failed to retrieve cart', error);
     res.status(500).send('Failed to retrieve cart');
-  }
-});
-
-// פונקציה לעדכון כמות מוצר בעגלה
-router.post('/update-cart', async (req, res) => {
-  const userId = req.session.userId;
-  const { productId, quantity } = req.body;
-
-  try {
-    let cart = await Cart.findOne({ userId });
-
-    if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' });
-    }
-
-    const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
-
-    if (productIndex !== -1) {
-      const product = await Product.findById(productId);
-      const currentQuantity = cart.products[productIndex].quantity;
-      const productPrice = product.discountedPrice; // שימוש בפונקציה discountedPrice
-
-      cart.totalPrice -= currentQuantity * productPrice;
-      cart.products[productIndex].quantity = quantity;
-      cart.totalPrice += quantity * productPrice;
-
-      await cart.save();
-      return res.status(200).json({ message: 'Cart updated successfully' });
-    } else {
-      return res.status(404).json({ message: 'Product not found in cart' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Failed to update cart', error });
   }
 });
 

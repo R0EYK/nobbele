@@ -110,3 +110,21 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdownContent.style.display = "none";
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateTotalPrice(); // עדכון המחיר לפי שער ההמרה שנבחר בדיפולט (USD)
+});
+
+function convertCurrency(totalPrice, exchangeRates) {
+const currency = document.getElementById('currency-select').value;
+const rate = exchangeRates[currency];
+return totalPrice * rate;
+}
+
+function updateTotalPrice() {
+const totalPriceElement = document.getElementById('total-price');
+const baseTotalPrice = parseFloat(totalPriceElement.dataset.baseTotal);
+const exchangeRates = JSON.parse(totalPriceElement.dataset.exchangeRates);
+const convertedTotalPrice = convertCurrency(baseTotalPrice, exchangeRates);
+totalPriceElement.innerText = convertedTotalPrice.toFixed(2) + ' ' + document.getElementById('currency-select').value;
+}
