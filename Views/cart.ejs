@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/css/cart.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
+ 
+ 
 </head>
 <body>
     <div class="topMenu"> 
@@ -76,7 +76,8 @@
         </div>
     </div>
     <div id="cartTitle"><h1>Your Shopping Cart</h1></div>
-
+ 
+   
     <div class="cart-container">
         <% if (products.length === 0) { %>
             <p class="empty-cart">Your cart is empty</p>
@@ -110,13 +111,26 @@
                 </div>
             <% }); %>
             <div class="cart-total">
-                <h3>Total: $<%= totalPrice %></h3>
+                <% if (loggedIn) { %>
+ 
+                    <div>
+                        <label for="currency-select">Choose a currency:</label>
+                        <select id="currency-select" onchange="updateTotalPrice()">
+                            <option value="USD" selected>USD</option>
+                            <option value="ILS">ILS</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </div>
+             
+                    <h2>Total Price: <span id="total-price" data-base-total="<%= totalPrice %>" data-exchange-rates='<%= JSON.stringify(exchangeRates) %>'></span></h2>
+             
+                    <% } %>
             </div>
             <form action="/checkout" method="GET">
                 <button type="submit">Proceed to Payment</button>
             </form>
         <% } %>
-        
+ 
     </div>
     <footer class="footer">
         <div class="container">
@@ -149,7 +163,7 @@
             </div>
         </div>
     </footer>
-
+ 
     <script src="/js/cart.js"></script> 
 </body>
 </html>
