@@ -91,8 +91,8 @@
                     <div class="cart-item-info">
                         <h3><%= product.productId.name %></h3>
                         <% if (product.productId.discount > 0) { %>
-                            <p class="price">Price: $<%= product.productId.discountedPrice %></p>
-                        <% } else { %>
+                            <p class="price">Price: $<%= product.productId.discountedPrice.toFixed(2) %></p>
+                            <% } else { %>
                             <p class="price">Price: $<%= product.productId.price %></p>
                         <% } %>                        <p>Quantity: 
                             <select class="quantity-select" data-product-id="<%= product.productId._id %>">

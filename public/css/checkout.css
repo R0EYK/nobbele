@@ -354,7 +354,7 @@
 
 .container {
   max-width: 800px; /* Adjust container width as needed */
-  margin: 50px auto; /* Center the container with top margin */
+  margin: 80px auto; /* Center the container with top margin */
   padding: 20px; /* Add internal padding */
   background-color: #f2f2f2; /* Light gray background color */
   border: 1px solid #ccc; /* Add a border */
