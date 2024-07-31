@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       searchForm.style.display = "none";
     }
   });
+
 });
  
 document.addEventListener("DOMContentLoaded", () => {
@@ -84,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const dropdown = document.querySelector(".dropdown");
   const dropdownContent = document.querySelector(".dropdown-content");
+  
  
   dropdown.addEventListener("mouseover", async () => {
     if (dropdownContent.children.length === 0) {
