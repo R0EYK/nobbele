@@ -33,9 +33,6 @@ const pageId = process.env.PAGE_ID;
 };
 
 
-
-
-
 exports.renderLogin = (req, res) => {
   res.render("admin-login", { errorMessage: null });
 };
