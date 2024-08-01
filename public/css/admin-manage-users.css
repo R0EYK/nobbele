@@ -19,8 +19,6 @@ body {
     top: 0;
   background-color: #ff7f3e;
   }
-
- 
   
   .admin-nav ul {
     list-style-type: none;
@@ -37,8 +35,6 @@ body {
     color: #fff;
     text-decoration: none;
   }
-
-  /* Styles specific to the admin-manage-users page */
 
 .form-container {
     max-width: 1000px;

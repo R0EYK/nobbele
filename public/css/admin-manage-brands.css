@@ -73,7 +73,7 @@ a {
 .brand-table a {
     text-decoration: none;
     display: inline-block;
-    margin-right: 10px; /* Space between icons */
+    margin-right: 10px;
 }
 
 .brand-table svg {
@@ -85,9 +85,8 @@ a {
     fill: #0056b3;
 }
 
-/* Specific styles for remove icon */
 .remove-icon svg {
-    fill: #dc3545; /* Red color for delete */
+    fill: #dc3545; 
 }
 
 .remove-icon svg:hover {
@@ -96,18 +95,18 @@ a {
 
 .add-product-container {
   text-align: center;
-  margin-bottom: 20px; /* Adjust the spacing as needed */
+  margin-bottom: 20px; 
   text-align: end;
 }
 
 .add-product-link {
-  font-size: 2rem; /* Adjust the size as needed */
+  font-size: 2rem; 
   text-decoration: none;
-  color: black; /* Adjust the color as needed */
-  display: inline-block; /* Make the link only as wide as the content */
+  color: black; 
+  display: inline-block; 
 
 }
 
 .add-product-link:hover {
-  color: blue; /* Adjust the hover color as needed */
+  color: blue;
 }

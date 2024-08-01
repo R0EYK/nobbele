@@ -51,7 +51,6 @@ exports.getUserOrders = async (req, res) => {
 exports.changePasswordPage = (req, res) => {
   res.render('changePassword' , {errorMessages:{}}); 
 };
-// userController.js
 
 exports.changePassword = async (req, res) => {
   const { currentPassword, newPassword, confirmPassword } = req.body;

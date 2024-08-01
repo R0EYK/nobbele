@@ -65,15 +65,15 @@ main {
 }
 
 .bar {
-  stroke: #000; /* Border color */
-  stroke-width: 1px; /* Border width */
-  transition: fill 0.3s ease; /* Smooth transition on hover */
+  stroke: #000;
+  stroke-width: 1px;
+  transition: fill 0.3s ease;
 }
 
 .bar:hover {
-  fill: #ff6f61; /* Change color on hover */
-  stroke: #fff; /* Change border color on hover */
-  stroke-width: 2px; /* Thicker border on hover */
+  fill: #ff6f61;
+  stroke: #fff;
+  stroke-width: 2px;
 }
 
 .label {
