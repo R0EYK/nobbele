@@ -13,6 +13,10 @@ const Cart = require("./models/cartModel"); // Adjust the path as per your proje
 const session = require("express-session");
 const app = express();
 const PORT = process.env.PORT || 3000;
+require('dotenv').config();
+
+const mongodbUri = process.env.MONGODB_URI;
+
 
 // Use express-session middleware
 app.use(
@@ -46,7 +50,7 @@ app.use(express.urlencoded({ extended: true }));
 // MongoDB Connection
 mongoose
   .connect(
-    "mongodb+srv://roeyk70:123ad123ad@nobbele.9nzlam0.mongodb.net/mydatabase?retryWrites=true&w=majority",
+    mongodbUri,
     {}
   )
   .then(() => {
