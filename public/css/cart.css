@@ -363,6 +363,15 @@ h1 {
   background-color: red;
 }
 
+canvas {
+  position: fixed;
+  top: 5%; /* 5% מהגובה של הדף מהחלק העליון */
+  left: 50%;
+  transform: translateX(-50%); /* למרכז את הקנבס לרוחב הדף */
+  z-index: 10; /* מוודא שהקנבס יהיה מעל לתוכן אחר */
+  pointer-events: none; /* למנוע מהקנבס להפריע לפעולות משתמש על הדף */
+}
+
 .cart-badge {
   position: absolute;
   top: 50%;

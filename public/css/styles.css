@@ -373,12 +373,13 @@
   overflow: hidden; /* Ensures no overflow issues */
 }
 
-.banner img {
+.banner video {
   max-width: 100%;
   height: auto;
   display: block;
   margin: 0 auto;
   transition: transform 0.5s ease-in-out; /* Smooth transition for scaling */
+  object-fit: cover;
 }
 
 .banner img:hover {

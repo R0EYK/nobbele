@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
  
 document.addEventListener("DOMContentLoaded", () => {
   // Update quantity in cart
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
  
 document.addEventListener('DOMContentLoaded', () => {
-  updateTotalPrice(); // עדכון המחיר לפי שער ההמרה שנבחר בדיפולט (USD)
+  updateTotalPrice(); // price update
 });
  
 function convertCurrency(totalPrice, exchangeRates) {
@@ -130,3 +131,63 @@ const exchangeRates = JSON.parse(totalPriceElement.dataset.exchangeRates);
 const convertedTotalPrice = convertCurrency(baseTotalPrice, exchangeRates);
 totalPriceElement.innerText = convertedTotalPrice.toFixed(2) + ' ' + document.getElementById('currency-select').value;
 }
+
+const canvas = document.getElementById('animationCanvas');
+const ctx = canvas.getContext('2d');
+
+// size of the bag
+const bagWidth = 40 - 20; 
+const bagHeight = 50 - 20; 
+const handleWidth = 4 - 2; 
+const handleHeight = 20 - 10;
+const speed = 2;
+let x = 0;
+
+// location of the bag 
+const yOffset = 50 + 30; 
+
+function drawBag(x, y) {
+    ctx.fillStyle = '#ffa500'; 
+    ctx.fillRect(x, y - bagHeight / 2, bagWidth, bagHeight);
+
+    ctx.strokeStyle = '#ff4500'; 
+    ctx.lineWidth = handleWidth;
+
+    ctx.beginPath();
+    ctx.moveTo(x + bagWidth / 4, y - bagHeight / 2);
+    ctx.lineTo(x + bagWidth / 4 + handleWidth, y - bagHeight / 2 - handleHeight);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x + 3 * bagWidth / 4, y - bagHeight / 2);
+    ctx.lineTo(x + 3 * bagWidth / 4 - handleWidth, y - bagHeight / 2 - handleHeight);
+    ctx.stroke();
+
+    ctx.strokeStyle = '#000'; 
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x + bagWidth / 4, y - bagHeight / 2);
+    ctx.lineTo(x + bagWidth / 4 + handleWidth, y - bagHeight / 2 - handleHeight);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x + 3 * bagWidth / 4, y - bagHeight / 2);
+    ctx.lineTo(x + 3 * bagWidth / 4 - handleWidth, y - bagHeight / 2 - handleHeight);
+    ctx.stroke();
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const y = yOffset; 
+    drawBag(x, y);
+
+    x += speed;
+
+    if (x > canvas.width) {
+        x = -bagWidth;
+    }
+
+    requestAnimationFrame(animate);
+}
+
+animate();
