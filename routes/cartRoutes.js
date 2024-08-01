@@ -4,7 +4,6 @@ const Cart = require('../models/cartModel');
 const Product = require('../models/productModel');
 const axios = require('axios');
  
-// פונקציה להוספת מוצר לסל
 router.post('/add-to-cart', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ message: 'You need to Login' });
@@ -39,7 +38,7 @@ router.post('/add-to-cart', async (req, res) => {
     }
  
     await cart.save();
-    req.session.numOfProducts = cart.numOfProducts; // עדכון ה-session
+    req.session.numOfProducts = cart.numOfProducts; 
  
     res.status(200).json({ message: 'Product added to cart successfully' });
   } catch (error) {
@@ -47,7 +46,6 @@ router.post('/add-to-cart', async (req, res) => {
   }
 });
  
-// פונקציה למחיקת מוצר מהעגלה
 router.post('/remove-from-cart', async (req, res) => {
   const userId = req.session.userId;
   const { productId } = req.body;
@@ -70,7 +68,7 @@ router.post('/remove-from-cart', async (req, res) => {
       cart.numOfProducts -= 1; // Decrease numOfProducts
  
       await cart.save();
-      req.session.numOfProducts = cart.numOfProducts; // עדכון ה-session
+      req.session.numOfProducts = cart.numOfProducts; 
       return res.status(200).json({ message: 'Product removed from cart successfully' });
     } else {
       return res.status(404).json({ message: 'Product not found in cart' });
@@ -80,7 +78,6 @@ router.post('/remove-from-cart', async (req, res) => {
   }
 });
  
-// פונקציה לעדכון כמות מוצר בעגלה
 router.post('/update-cart', async (req, res) => {
   const userId = req.session.userId;
   const { productId, quantity } = req.body;
@@ -104,7 +101,7 @@ router.post('/update-cart', async (req, res) => {
       cart.totalPrice += quantity * productPrice;
  
       await cart.save();
-      req.session.numOfProducts = cart.numOfProducts; // עדכון ה-session
+      req.session.numOfProducts = cart.numOfProducts; 
  
       return res.status(200).json({ message: 'Cart updated successfully' });
     } else {
@@ -115,7 +112,6 @@ router.post('/update-cart', async (req, res) => {
   }
 });
  
-// פונקציה לקבלת שערי חליפין
 async function getExchangeRates() {
   const apiKey = 'd6d48c80e3efba0725d5a7df';
   const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
@@ -130,7 +126,6 @@ async function getExchangeRates() {
   }
 }
  
-// פונקציה להצגת סל הקניות
 router.get('/cart', async (req, res) => {
   const userId = req.session.userId;
  
