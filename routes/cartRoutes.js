@@ -3,6 +3,8 @@ const router = express.Router();
 const Cart = require('../models/cartModel');
 const Product = require('../models/productModel');
 const axios = require('axios');
+require('dotenv').config();
+
  
 // פונקציה להוספת מוצר לסל
 router.post('/add-to-cart', async (req, res) => {
@@ -117,7 +119,7 @@ router.post('/update-cart', async (req, res) => {
  
 // פונקציה לקבלת שערי חליפין
 async function getExchangeRates() {
-  const apiKey = 'd6d48c80e3efba0725d5a7df';
+  const apiKey = process.env.API_KEY;
   const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
  
   try {

@@ -5,11 +5,13 @@ const Product = require("../models/productModel");
 const Brand = require('../models/brandModel');
 const User = require('../models/userModel');
 const axios = require('axios');
+require('dotenv').config();
+
 
 // Function to post to Facebook
 const postToFacebook = async (product) => {
-  const pageAccessToken = 'EAALh1BrnmxQBOZCSLosgEcZCZA4BF3W27O2BncCn3rGZCL84E5MqRhoMVKZBEv48dZA0UonMZC2yINC9VxIq9cXxoeIiVGpiS77d5IJW9zFvdU5KtvAyiHqMQTy7KocjlO42kip1ctkPsOwT72cZC87g5c0UESd71eHn51WKcpeZCsr2ZBE9R3dV0CJSpmkuZAvCBH2Avd9xaxZBoZBJUin9QN9tcvMoO'
-  const pageId = '370033476196420'; // Replace with your page ID
+  const pageAccessToken = process.env.PAGE_ACCESS_TOKEN;
+const pageId = process.env.PAGE_ID;
 
   const message = `
     New Product: ${product.name}
